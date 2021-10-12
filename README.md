@@ -1,14 +1,10 @@
 # unknownx2007.github.io
 <!DOCTYPE html>
-<html>
+<html style="background-color: black">
     <head>
         <title>Simple Example</title>
-        <script type="text/javascript">
-        function sbt(){
-            alert("Thankk kiuu");
-        }</script>
     </head>
-    <body>
+    <body style="color: green">
         <h1>Chàoo huynh :>></h1>
         <p>Xin huynh chỉ giáo đệ thêm nha</p>
         <form method = "GET" onsubmit="return sbt()">
