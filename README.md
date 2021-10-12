@@ -1,5 +1,4 @@
 # unknownx2007.github.io
-<!DOCTYPE html>
 <html>
     <head>
         <title>Simple Example</title>
