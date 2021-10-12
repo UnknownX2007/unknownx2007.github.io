@@ -1,6 +1,6 @@
 # unknownx2007.github.io
 <!DOCTYPE html>
-<html style="background-color: black">
+<html>
     <head>
         <title>Simple Example</title>
     </head>
