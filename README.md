@@ -1,5 +1,5 @@
 <html>
- <body>
+ <body style="color: red">
   <h1>Chàoo huynh :>></h1>
   <p>Xin huynh chỉ giáo đệ thêm nha</p>
   <form method = "GET" onsubmit="return sbt()">
