@@ -2,11 +2,6 @@
 <html>
   <link rel="stylesheet" href="index.css"/>
     <head>
-     <script>
-      function myFunction() {
-        alert("Hello World!")
-      }
-  </script>
  </head>
     <body> 
         <h1 style="font-size: 40px">Xin chào</h1>
