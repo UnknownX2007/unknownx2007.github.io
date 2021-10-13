@@ -1,6 +1,6 @@
 <html>
+    <link rel="stylesheet" href="index.css"/>
     <head>
-      <link rel="stylesheet" href="index.css"/>
     </head>
     <body>
         <h1 style="font-size: 40px">Xin chào</h1>
