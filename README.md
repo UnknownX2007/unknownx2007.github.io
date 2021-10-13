@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html style="background-color: black">
+<html style="background: black">
     <head>
         <title>Simple Example</title>
     </head>
