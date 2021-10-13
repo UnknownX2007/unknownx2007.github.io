@@ -1,9 +1,11 @@
 <html>
+  <style>
     body {
   color: green;
   border: black;
   text-align: center;
 }
+    </style>
     <head>
     </head>
     <body>
