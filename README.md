@@ -2,6 +2,7 @@
 <html>
   <link rel="stylesheet" href="index.css"/>
     <head>
+    alert('Tắt hộp thoại này để vào trang')
  </head>
     <body> 
         <h1 style="font-size: 40px">Xin chào</h1>
