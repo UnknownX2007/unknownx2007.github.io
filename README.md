@@ -1,5 +1,9 @@
 <html>
-    <link rel="stylesheet" href="index.css"/>
+    body {
+  color: green;
+  border: black;
+  text-align: center;
+}
     <head>
     </head>
     <body>
