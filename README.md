@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html style="background-color: black">
 <html>
   <style>
