@@ -1,7 +1,6 @@
 <html style="background-color: black">
 <html>
   <link rel="stylesheet" href="index.css"/>
-    </style>
     <head>
     </head>
     <body>
