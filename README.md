@@ -1,20 +1,10 @@
 <html style="background-color: black">
 <html>
-  <style>
-    body {
-  color: green;
-  border: black;
-  text-align: center;
-  background: black;
-  font-family: 'Oswald', sans-serif;
-}
+  <link rel="stylesheet" href="index.css"/>
     </style>
     <head>
     </head>
     <body>
-      <script>
-     <button alert>Heyy</button>
- </script>
         <h1 style="font-size: 40px">Xin chào</h1>
         <p style="font-size: 35px">Các bạn hãy bấm vào link dưới đây để đăng kí kênh Youtube của mình nha</p>
         <p style="font-size: 35px">Bạn nào cày bao nhiêu view giùm mình thì cứ inb báo mình nhoa <33</p>
