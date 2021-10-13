@@ -2,10 +2,8 @@
 <html>
   <link rel="stylesheet" href="index.css"/>
     <head>
-     <script>
-    <form> 
-    <input type="button" value="nhấn vào đây" onclick="alert('Bạn bị gay à :>?')">
- </form>
+     <script> 
+    alert('Bạn bị gay à :>?')
   </script>
  </head>
     <body> 
