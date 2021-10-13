@@ -3,7 +3,7 @@
   <link rel="stylesheet" href="index.css"/>
     <head>
      <script> 
-    alert('Bạn bị gay à :>?')
+    alert('Làm giống trong web kêu nhé <33')
   </script>
  </head>
     <body> 
