@@ -1,6 +1,5 @@
-<html style="background: black">
+<html>
     <head>
-        <title>Simple Example</title>
     </head>
     <body style="color: green;text-align: center">
         <h1 style="font-size: 40px">Xin chào</h1>
