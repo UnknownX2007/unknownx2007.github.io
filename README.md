@@ -3,7 +3,9 @@
   <link rel="stylesheet" href="index.css"/>
     <head>
      <script>
-    alert('Tắt hộp thoại này để vào trang')
+    <form> 
+    <input type="button" value="nhấn vào đây" onclick="alert('Bạn bị gay à :>?')">
+ </form>
   </script>
  </head>
     <body> 
