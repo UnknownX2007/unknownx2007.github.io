@@ -4,6 +4,7 @@
   color: green;
   border: black;
   text-align: center;
+  background: black;
 }
     </style>
     <head>
