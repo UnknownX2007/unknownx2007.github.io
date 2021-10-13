@@ -1,9 +1,9 @@
-<html>
- <body style="color: red">
-  <h1>Chàoo huynh :>></h1>
-  <p>Xin huynh chỉ giáo đệ thêm nha</p>
-  <form method = "GET" onsubmit="return sbt()">
-    <button type="submit">Được đệ</button>
-  </form>
- </body>
-</html>
+<!DOCTYPE html>
+<html style="background-color: black">
+    <head>
+        <title>Simple Example</title>
+    </head>
+    <body style="color: green;text-align: center">
+        <h1 style="font-size: 40px">Xin chào</h1>
+        <p style="font-size: 35px">Các bạn hãy bấm vào link dưới đây để đăng kí kênh Youtube của mình nha</p>
+        <a href="https://www.youtube.com/channel/UCcs0UoG0pqi7K_XcrI59SBw">Link đây</a>
