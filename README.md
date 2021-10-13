@@ -5,7 +5,7 @@
   border: black;
   text-align: center;
   background: black;
-  font-family: Oswald;
+  font-family: 'Oswald', sans-serif;
 }
     </style>
     <head>
