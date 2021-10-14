@@ -2,7 +2,13 @@
 <link rel="stylesheet" href="index.css">
     <head>
     <style>
-   p.dashed {border-style: dashed;}
+   p.dashed {border-top-style: dashed;
+       border-bottom-style: dashed;
+       border-right-style: solid;
+       border-left-style: solid;
+     border-color: red green blue yellow;
+     background-color: gray;
+   }
 </style>
    </head>
     <body style="font-size= 40px;">
