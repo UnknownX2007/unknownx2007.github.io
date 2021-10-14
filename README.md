@@ -3,6 +3,7 @@
   <link rel="stylesheet" href="index.css"/>
     <head>
      <script> 
+     alert('Làm giống như trang web nhoaa <333')
   </script>
  </head>
     <body> 
