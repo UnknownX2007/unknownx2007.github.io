@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="index.css">
     <head>
     <style>
-   p.dashed {border-top-style: dashed;
+   p.style {border-top-style: dashed;
        border-bottom-style: dashed;
        border-right-style: solid;
        border-left-style: solid;
@@ -18,6 +18,6 @@
    <img src="https://tse4.mm.bing.net/th?id=OIP.iSE7fOtQA9P_eqFgVA5_ogHaGZ&pid=Api&P=0&w=198&h=172" width="100" height="100"> <br/>
    <a href="https://www.youtube.com/channel/UCcs0UoG0pqi7K_XcrI59SBw" style="font-size: 30px">Youtube của mình</a> <br/>
    <img src="https://tse1.mm.bing.net/th?id=OIP.Gjm7_ItVSXAIIEhKgA_HmwHaE8&pid=Api&P=0&w=226&h=152" width="100" height="100"> 
-   <p style="font-size: 30px" class="dashed">Developed by VoDinhKhoi</p>
+   <p style="font-size: 30px" class="style">Developed by VoDinhKhoi</p>
    </body>
 </html>
