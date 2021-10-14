@@ -1,12 +1,6 @@
 <html style="background-color: black">
 <link rel="stylesheet" href="index.css">
     <head>
-    <style>
-   .style {border-top-style: dotted;
-     border-color: green;
-     background-color: black;
-   }
-</style>
    </head>
     <body class="body">
    <p style="font-size: 40px" class="style">Xin chào tất cả các bạn nha</p>

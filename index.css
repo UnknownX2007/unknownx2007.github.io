@@ -6,3 +6,7 @@
     font-family: 'Oswald', sans-serif;
     font-size: '45px';
   }
+.style {border-top-style: dotted;
+  border-color: green;
+  background-color: black;
+}
