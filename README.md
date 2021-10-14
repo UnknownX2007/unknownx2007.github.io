@@ -1,11 +1,13 @@
 <html style="background-color: black">
   <link rel="stylesheet" href="index.css"/>
     <head>
-     <script> 
-     alert('Làm giống như trang web nhoaa <333')
-  </script>
+    <title>UnknownX2007</title>
  </head>
     <body>
-     <input type="submit" placeholder="Click me!" onclick="alert('You so cutee~')">
+    <script>
+     const x = 5;
+     const y = 6;
+     document.write(x+y)
+  </script>
   </body>
 </html>
