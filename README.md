@@ -7,7 +7,7 @@
        border-right-style: solid;
        border-left-style: solid;
      border-color: red green blue yellow;
-     background-color: gray;
+     background-color: black;
    }
 </style>
    </head>
