@@ -1,8 +1,9 @@
 <html style="background-color: black">
-     <link rel="stylesheet" href="index.css">
+<link rel="stylesheet" href="index.css">
     <head>
    </head>
     <body style="font-size= 40px;">
+    <link rel="stylesheet" href="index.css">
    <h1>Hello, xin chào các bạn nha</h1>
    <p>Mình là một Beginner, mình sẽ làm về Front-end, mong các bạn chỉ giáo thêm cho mình nha</p>
     <a href="https://www.facebook.com/UnknownX.2007/">Facebook của mình</a> <br/>
