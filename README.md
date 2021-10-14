@@ -5,8 +5,8 @@
  </head>
     <body>
     <script>
-     const x = 5;
-     const y = 6;
+     var x;
+     var y;
      document.write(x+y)
   </script>
   </body>
