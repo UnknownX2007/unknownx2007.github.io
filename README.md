@@ -8,7 +8,7 @@
    }
 </style>
    </head>
-    <body style="font-size= 40px;">
+    <body class="body">
    <p style="font-size: 40px" class="style">Xin chào tất cả các bạn nha</p>
    <p  style="font-size: 35px">Mình là một Beginner, mình sẽ làm về Front-end, mong các bạn chỉ giáo thêm cho mình nha</p>
     <a href="https://www.facebook.com/UnknownX.2007/"  style="font-size: 30px">Facebook của mình</a> <br/>
