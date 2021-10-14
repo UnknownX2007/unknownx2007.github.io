@@ -6,8 +6,8 @@
     <body>
     <script>
      var x=9;
-     var x=99;
-     document.write(x*y)
+     var y=99;
+     document.write(x*y);
   </script>
   </body>
 </html>
