@@ -2,14 +2,14 @@
 <link rel="stylesheet" href="index.css">
     <head>
     <style>
-   p.style {border-top-style: dotted;
+   .style {border-top-style: dotted;
      border-color: green;
      background-color: black;
    }
 </style>
    </head>
     <body style="font-size= 40px;">
-   <h1 style="font-size: 40px">Hello, xin chào các bạn nha</h1>
+   <h1 style="font-size: 40px" class="style">Hello, xin chào các bạn nha</h1>
    <p  style="font-size: 35px">Mình là một Beginner, mình sẽ làm về Front-end, mong các bạn chỉ giáo thêm cho mình nha</p>
     <a href="https://www.facebook.com/UnknownX.2007/"  style="font-size: 30px">Facebook của mình</a> <br/>
    <img src="https://tse4.mm.bing.net/th?id=OIP.iSE7fOtQA9P_eqFgVA5_ogHaGZ&pid=Api&P=0&w=198&h=172" width="100" height="100"> <br/>
