@@ -5,8 +5,8 @@
  </head>
     <body>
     <script>
-     var x=999999999999999999999999999999999999999;
-     var x=999999999999999999999999999999999999999;
+     var x=9;
+     var x=99;
      document.write(x*y)
   </script>
   </body>
