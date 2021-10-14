@@ -3,7 +3,6 @@
   <link rel="stylesheet" href="index.css"/>
     <head>
      <script> 
-    alert('Làm giống trong web kêu nhé <33')
   </script>
  </head>
     <body> 
