@@ -2,11 +2,8 @@
 <link rel="stylesheet" href="index.css">
     <head>
     <style>
-   p.style {border-top-style: dashed;
-       border-bottom-style: dashed;
-       border-right-style: solid;
-       border-left-style: solid;
-     border-color: red green blue yellow;
+   p.style {border-top-style: dotted;
+     border-color: green;
      background-color: black;
    }
 </style>
