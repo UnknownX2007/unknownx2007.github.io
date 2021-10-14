@@ -1,7 +1,7 @@
 <html style="background-color: black">
+ <link rel="stylesheet" href="index.css"/>
     <head>
       <title>UnknownX2007</title>
-      <link rel="stylesheet" href="index.css"/>
    </head>
     <body>
    <h1>Hello, xin chào các bạn nha</h1>
