@@ -5,9 +5,9 @@
  </head>
     <body>
     <script>
-     var x;
-     var y;
-     document.write(x+y)
+     var x=999999999999999999999999999999999999999;
+     var x=999999999999999999999999999999999999999;
+     document.write(x*y)
   </script>
   </body>
 </html>
