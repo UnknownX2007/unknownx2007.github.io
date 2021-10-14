@@ -6,6 +6,6 @@
   </script>
  </head>
     <body>
-     <input type="submit" onclick="alert('Thanks')">
+     <input type="submit" onclick="alert('You so cutee~')">Click me !</input>
   </body>
 </html>
