@@ -6,8 +6,8 @@
     font-family: 'Andada Pro', serif;
     font-size: '45px';
   }
-.style {border-radius: 30px;
-  border: solid;
+.style {border: solid;
+  border-radius: 30px;
   border-color: green;
   background-color: black;
 }
