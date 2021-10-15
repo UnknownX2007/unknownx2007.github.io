@@ -7,6 +7,7 @@
     font-size: '45px';
   }
 .style {border-radius: 30px;
+  border: solid;
   border-color: green;
   background-color: black;
 }
