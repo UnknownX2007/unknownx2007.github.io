@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>unknownx2007.github.io</title>
+<title>Beginner Coder</title>
 <meta name="generator" content="Jekyll v3.9.0" />
 <meta property="og:title" content="unknownx2007.github.io" />
 <meta property="og:locale" content="en_US" />
@@ -17,28 +15,18 @@
 <meta property="twitter:title" content="unknownx2007.github.io" />
 <script type="application/ld+json">
 {"url":"https://unknownx2007.github.io/","@type":"WebSite","headline":"unknownx2007.github.io","name":"unknownx2007.github.io","@context":"https://schema.org"}</script>
-<!-- End Jekyll SEO tag -->
 
     <link rel="stylesheet" href="/assets/css/style.css?v=242ecae03b16e86c7169c56abd0f722ec27950f8">
     <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
-
-<!-- Setup Google Analytics -->
-
-
-
-<!-- You can set your favicon here -->
-<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
-
-<!-- end custom head snippets -->
 
   </head>
   <body>
     <div class="container-lg px-3 my-5 markdown-body">
       
-      <h1><a href="https://unknownx2007.github.io/">unknownx2007.github.io</a></h1>
+      
       
 
-      <html lang="en-US" style="background-color: black">
+  <html lang="en-US" style="background-color: black">
 <link rel="stylesheet" href="index.css" />
 <head>
 <title>Beginner Coder</title>
