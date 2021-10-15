@@ -1,9 +1,12 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 .body {
     color: green;
     border: black;
     text-align: center;
     background: black;
-    font-family: 'Andada Pro', serif;
+    font-family: 'Dancing Script', cursive;
     font-size: '45px';
   }
 .style {border: solid;
