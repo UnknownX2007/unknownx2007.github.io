@@ -1,8 +1,9 @@
-<html lang="en-US" style="background-color: black"><head>
-<title>unknownx2007.github.io</title>
+<html lang="en-US" style="background-color: black">
 <link rel="stylesheet" href="index.css">
+<head>
+<title>Beginner Coder</title>
   </head>
-  <body>
+  <body class="body">
    <p style="font-size: 40px">Xin chào tất cả các bạn nha</p>
    <p style="font-size: 35px">Mình là một Beginner, mình sẽ làm về Front-end, mong các bạn chỉ giáo thêm cho mình nha</p>
     <a href="https://www.facebook.com/UnknownX.2007/" style="font-size: 30px">Facebook của mình</a> <br>
