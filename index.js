@@ -1,5 +1,5 @@
 <script>
-  var a=5;
-  var b=6; 
+  var x=5;
+  var y=6; 
   document.write(x*y);
 </script>
