@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en-US">
   <head>
     <meta charset="UTF-8">
@@ -14,18 +13,12 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="unknownx2007.github.io" />
 <script type="application/ld+json">
-{"url":"https://unknownx2007.github.io/","@type":"WebSite","headline":"unknownx2007.github.io","name":"unknownx2007.github.io","@context":"https://schema.org"}</script>
-
     <link rel="stylesheet" href="/assets/css/style.css?v=242ecae03b16e86c7169c56abd0f722ec27950f8">
     <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
 
   </head>
   <body>
     <div class="container-lg px-3 my-5 markdown-body">
-      
-      
-      
-
   <html lang="en-US" style="background-color: black">
 <link rel="stylesheet" href="index.css" />
 <head>
