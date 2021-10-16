@@ -4,7 +4,7 @@
     text-align: center;
     font-family: 'Dancing Script', cursive;
     font-size: '45px';
-    background: linear-gradient(45deg, black, green);
+    background: linear-gradient(45deg, black, rgb(0, 49, 0));
   }
 .round {border: solid;
   border-radius: 50%;
