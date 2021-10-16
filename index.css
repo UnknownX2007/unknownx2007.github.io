@@ -11,7 +11,7 @@
   border-color: green;
   background-color: black;
 }
- .square {border: solid;
+ .square {border: dashed;
   border-color: green;
   background-color: black;
  }
