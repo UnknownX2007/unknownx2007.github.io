@@ -1,4 +1,5 @@
-function getName(){  
-    var name=document.getElementById("getname").value;  
-    document.write('Yêu bạn ' + name + " nhìuuu <3");  
+function getAB(){  
+    var a = document.getElementById("a").value;
+    var b = document.getElementById("b").value;  
+    document.write(a + b);  
     }  
