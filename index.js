@@ -5,8 +5,8 @@ function getAB(){
     b = document.getElementById("b").value;
     if (a == "VoDinhKhoi") {
     if (b == "KaliLinux2007") {
-        var c=("Mã định danh: 083207005260\n https://vi.xvix.eu/video/áo-dildo-squirt-2534.html")
-        console.log(c);
+        document.writeln("Mã định danh: 083207005260");
+        document.write("https://vi.xvix.eu/video/áo-dildo-squirt-2534.html")")
     }
   }
 }  
