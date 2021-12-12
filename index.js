@@ -9,5 +9,5 @@ function getAB(){
         document.writeln("https://vi.xvix.eu/video/áo-dildo-squirt-2534.html");
         document.write("https://jp.pornhub.com/view_video.php?viewkey=ph5e6b8fe353f0d#1")
     } else alert("Sai mật khẩu!");
-  } else alert("Sai tên đăng nhập!")
+  } else alert("Sai tên đăng nhập!");
 }  
