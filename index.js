@@ -9,6 +9,3 @@ function getAB(){
     } else alert("Sai mật khẩu!");
   } else alert("Sai tên đăng nhập!");
 }  
-function minhanh() {
-    document.writeln("My crush is Minh Anh");
-}
