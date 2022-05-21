@@ -4,7 +4,7 @@ function getAB(){
     var b = 0;
     b = document.getElementById("b").value;
     if (a == "VoDinhKhoi") {
-    if (b == "KaliLinux2007") {
+    if (b == "VoDinhKhoi2007!") {
         document.writeln("Mã định danh: 083207005260");
     } else alert("Sai mật khẩu!");
   } else alert("Sai tên đăng nhập!");
