@@ -5,6 +5,7 @@ body {
     font-family: "Times New Roman", Times, serif;
     font-size: '45px';
     background-image: url(back.jpg);
+    background-repeat: repeat;
   }
 .round {border: solid;
   border-radius: 50%;
