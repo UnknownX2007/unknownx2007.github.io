@@ -11,21 +11,6 @@ body {
     background-attachment: fixed;
     margin: 700px 20px, 100px;
   }
-@keyframes example {
-    0%   { left:0px; top:0px;}
-    25%  {left:200px; top:0px;}
-    50%  {left:200px; top:200px;}
-    75%  {left:0px; top:200px;}
-    100% {left:0px; top:0px;}
-}
-div {
-  width: 400px;
-  height: 10px;
-  position: relative;
-  animation-name: example;
-  animation-duration: 10s;
-  animation-iteration-count: 2;
-}
 .round {border: solid;
   border-radius: 50%;
   border-color: green;
