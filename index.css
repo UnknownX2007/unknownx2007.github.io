@@ -9,7 +9,7 @@ body {
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    margin: 200px;
+    margin: 700px 20px, 100px;
   }
 .round {border: solid;
   border-radius: 50%;
