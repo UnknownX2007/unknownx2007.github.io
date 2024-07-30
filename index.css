@@ -19,8 +19,8 @@ body {
     100% {left:0px; top:0px;}
 }
 div {
-  width: 200px;
-  height: 200px;
+  width: 400px;
+  height: 10px;
   position: relative;
   animation-name: example;
   animation-duration: 10s;
