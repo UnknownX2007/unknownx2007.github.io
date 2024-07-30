@@ -8,6 +8,7 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: scroll;
+    background-size: auto;
   }
 .round {border: solid;
   border-radius: 50%;
