@@ -5,13 +5,14 @@ body {
     font-family: "Times New Roman", Times, serif;
     font-size: '45px';
     background-image: url(back.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: scroll;
   }
 .round {border: solid;
   border-radius: 50%;
   border-color: green;
-  background-color: black;
 }
 .square {border: dashed;
   border-color: green;
-  background-color: black;
  }
