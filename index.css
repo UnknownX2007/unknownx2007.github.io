@@ -6,7 +6,6 @@ body {
     font-size: '45px';
     background-image: url(back.jpg);
     background-repeat: no-repeat;
-    background-position: center;
     background-attachment: scroll;
     background-size: 100% 200%;
   }
