@@ -18,6 +18,8 @@ body {
 .nav {
     overflow: hidden;
     background-color: black;
+    margin: 0;
+    padding: 0;
 }
 .nav a {
     float: left;
@@ -31,7 +33,7 @@ li a:hover {
     background-color: #ddd;
     color: black;
 }
-li a.active {
+.active {
     background-color: #04AA6D;
     color: white;
 }
