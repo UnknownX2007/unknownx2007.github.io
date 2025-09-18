@@ -29,7 +29,7 @@ body {
     text-decoration: none;
     font-size: 17px;
 }
-li a:hover {
+.nav a:hover {
     background-color: #ddd;
     color: black;
 }
