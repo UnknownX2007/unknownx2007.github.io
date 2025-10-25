@@ -1,0 +1,79 @@
+/* Biến màu sắc (CSS3 Variables) - Bạn có thể thay đổi màu chủ đề tại đây */
+:root {
+    --primary-color: #00684a; /* Màu xanh đậm (màu của logo du lịch VN) */
+    --secondary-color: #f7b733; /* Màu vàng (màu sao) */
+    --navbar-height: 56px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    /* Thêm padding-top để nội dung không bị navbar che khuất */
+    padding-top: var(--navbar-height);
+}
+
+/* 1. Tùy chỉnh Navbar */
+.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+
+/* 2. Tùy chỉnh Hero Section */
+.hero-section {
+    position: relative;
+    height: 70vh; /* Chiều cao 70% màn hình */
+    background-image: url('img/TPHCM1.jpg'); /* Thay bằng ảnh nền đẹp */
+    background-size: contain;
+    background-position: center;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Lớp phủ mờ */
+}
+
+.hero-content {
+    position: relative; /* Đảm bảo nội dung nổi lên trên lớp phủ */
+    z-index: 1;
+}
+
+.btn-warning {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: #333;
+}
+
+.btn-warning:hover {
+    background-color: #e6a72a;
+    border-color: #e6a72a;
+}
+
+/* 3. Tùy chỉnh Card Điểm đến (Hiệu ứng CSS3) */
+.destination-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.destination-card:hover {
+    transform: translateY(-10px); /* Hiệu ứng nhấc lên */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* 4. Tùy chỉnh Trải nghiệm */
+#experiences i {
+    transition: transform 0.3s ease;
+}
+
+#experiences .col-md-3:hover i {
+    transform: scale(1.2); /* Phóng to icon khi hover */
+}
+
+/* 5. Tùy chỉnh Footer */
+#footer {
+    background-color: #222 !important;
+}
