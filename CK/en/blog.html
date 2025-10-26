@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head id="home">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog For You</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../style.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#home">Ho Chi Minh City - Places to Go</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="destinations.html">Destinations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="experiences.html">Experiences</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item ms-lg-2 border-end pe-2">
+                        <a class="nav-link" href="../vi/blog.html">
+                            <img src="../img/vn.png" alt="Vietnam Flag" style="width: 24px; height: 16px; margin-right: 5px;">VI
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active fw-bold" href="blog.html">
+                            <img src="../img/en.png" alt="UK Flag" style="width: 24px; height: 16px; margin-right: 5px;">EN
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-5" style="padding-top: 56px;"> 
+        <div class="row mt-4">
+
+            <div class="col-lg-8">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="home.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="blog.html">Blog</a></li>
+                    </ol>
+                </nav>
+                <h1 class="display-5 fw-bold">3 "Authentic" Saigon Eating Tips You Should Know</h1>
+                <p class="text-muted"><i class="fas fa-calendar-alt me-2"></i>October 25, 2025  |  <i class="fas fa-user me-2"></i>Posted by: Admin</p>
+                
+                <img src="../img/streetfood.jpg" class="img-fluid rounded shadow-sm mb-4" alt="Saigon Street Food">
+
+                <article>
+                    <p class="lead">Saigon is a culinary paradise, but to fully enjoy the flavors, you need to know a few "secrets". Here are 3 small tips to help you have the best street food experience.</p>
+                    
+                    <h4>1. Eat where the locals crowd</h4>
+                    <p>Don't be afraid of sidewalk stalls. If you see a place crowded with local people, that's a sign of a delicious and affordable eatery.</p>
+
+                    <h4>2. Try Vietnamese iced coffee</h4>
+                    <p>Coffee is not just a drink; it's a culture. Try a traditional filtered iced coffee at a roadside stall to feel the slow rhythm of the city.</p>
+                    
+                    <h4>3. Don't miss the alleys</h4>
+                    <p>Many culinary "gems" are hidden in small alleys. From noodle soups, and offal stew, to various sweet soups, Saigon's alleys hold the most original flavors.</p>
+                    </article>
+
+                <hr class="my-4">
+
+                <section id="comments">
+                    <h3 class="mb-3">Comments ( <span id="comment-count">0</span> )</h3>
+
+                    <div id="comment-list" class="mb-4">
+                        </div>
+
+                    <h4 class="mb-3">Leave Your Comment</h4>
+                    <form id="comment-form">
+                        <div class="mb-3">
+                            <label for="comment-name" class="form-label">Your Name</label>
+                            <input type="text" class="form-control" id="comment-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="comment-text" class="form-label">Comment</label>
+                            <textarea class="form-control" id="comment-text" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit Comment</button>
+                    </form>
+                </section>
+                
+                
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Search</h5>
+                        <form action="https://www.google.com/search" method="get" target="_blank">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="q" placeholder="Searching for article...">
+                                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Featured Posts</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="https://vnexpress.net/cam-nang-du-lich-mot-ngay-kham-pha-dia-dao-cu-chi-4873164.html" class="text-decoration-none d-block p-2">Explore Cu Chi Tunnels</a></li>
+                            <li><a href="https://www.vietnamairlines.com/vn/vi/useful-information/travel-guide/cafe-bo-song" class="text-decoration-none d-block p-2">Top 10 cafes with beautiful views</a></li>
+                            <li><a href="https://vinwonders.com/vi/wonderpedia/news/buu-dien-trung-tam-sai-gon" class="text-decoration-none d-block p-2">A day at the City Post Office</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer id="footer" class="bg-dark text-white p-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Ho Chi Minh City - Places to Go</h5>
+                    <p>A website introducing worthwhile experiences in Ho Chi Minh City.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../aboutus.html" class="text-white text-decoration-none">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Follow Us</h5>
+                    <a href="https://www.facebook.com/HCMUE.VN" class="text-white me-2"><i class="fab fa-facebook-f fa-2x"></i></a>
+                    <a href="https://www.tiktok.com/@hcmue" class="text-white me-2"><i class="fab fa-tiktok fa-2x"></i></a>
+                    <a href="https://www.youtube.com/@HCMUEofficial" class="text-white me-2"><i class="fab fa-youtube fa-2x"></i></a>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center mb-0">© FIT - HCMUE.</p>
+        </div>
+    </footer>
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="../script.js"></script>
+</body>
+</html>
