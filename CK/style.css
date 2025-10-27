@@ -64,6 +64,29 @@ body {
     border-color: #e6a72a;
 }
 
+.member-card {
+    display: flex; /* Kích hoạt Flexbox */
+    flex-direction: column; /* Sắp xếp các mục theo cột */
+    align-items: center; /* Căn giữa các mục theo chiều ngang */
+    /* Các thuộc tính khác của card như width, border, padding, v.v. */
+    width: 200px; /* Ví dụ */
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 10px;
+    text-align: center; /* Căn giữa text nếu chưa có */
+}
+
+.member-card img {
+    /* Đảm bảo ảnh có kích thước cố định hoặc max-width */
+    width: 120px; /* Ví dụ kích thước ảnh */
+    height: 120px; /* Ví dụ kích thước ảnh */
+    border-radius: 50%; /* Để có hình tròn */
+    object-fit: cover; /* Đảm bảo ảnh không bị méo */
+    margin-bottom: 10px; /* Tạo khoảng cách với tên */
+    margin-top: 0; /* Đảm bảo không có margin trên */
+    margin-bottom: 10px; /* Khoảng cách với phần tử bên dưới */
+}
+
 /* Tùy chỉnh Card Điểm đến (Hiệu ứng CSS3) */
 .destination-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
