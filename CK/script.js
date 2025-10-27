@@ -12,12 +12,12 @@ $(document).ready(function() {
             // Thêm lớp 'scrolled' vào navbar
             navbar.addClass('scrolled shadow-lg');
             navbar.removeClass('bg-primary');
-            navbar.css('background-color', 'rgba(0, 104, 74, 0.9)'); /* Màu xanh mờ */
-            navbar.css('backdrop-filter', 'blur(5px)'); /* Hiệu ứng mờ kính (CSS3) */
+            navbar.css('background-color', 'rgba(0, 104, 74, 0.9)'); //Màu xanh mờ
+            navbar.css('backdrop-filter', 'blur(5px)'); // Hiệu ứng mờ kính (CSS3)
         } else {
             // Xóa lớp 'scrolled'
             navbar.removeClass('scrolled shadow-lg');
-            navbar.css('background-color', ''); /* Trả về màu gốc */
+            navbar.css('background-color', ''); // Trả về màu gốc
             navbar.css('backdrop-filter', 'none');
             navbar.addClass('bg-primary');
         }

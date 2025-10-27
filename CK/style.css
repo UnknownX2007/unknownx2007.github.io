@@ -9,6 +9,13 @@ body {
     /* Thêm padding-top để nội dung không bị navbar che khuất */
     padding-top: var(--navbar-height);
 }
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+.text-secondary {
+    color: var(--secondary-color) !important;
+}
 
 /* Tùy chỉnh Navbar */
 .bg-primary {
@@ -40,6 +47,10 @@ body {
 .hero-content {
     position: relative; /* Đảm bảo nội dung nổi lên trên lớp phủ */
     z-index: 1;
+}
+
+.btn-primary {
+    background-color: var(--primary-color) !important;
 }
 
 .btn-warning {
@@ -74,5 +85,5 @@ body {
 
 /* Tùy chỉnh Footer */
 #footer {
-    background-color: #222 !important;
+    background-color: var(--primary-color) !important;
 }
