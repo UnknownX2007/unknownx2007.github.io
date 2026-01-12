@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #000;
+    color: #fff;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Nút Pause/Play góc trên bên phải */
+#toggleBtn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid #fff;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+#toggleBtn:hover {
+    background: #fff;
+    color: #000;
+}
+
+/* Container Lyric */
+#lyric-container {
+    text-align: center;
+    width: 80%;
+    max-width: 800px;
+    z-index: 10;
+}
+
+#lyric-text {
+    font-size: 2rem;
+    line-height: 1.5;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Màn hình kết thúc */
+#end-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #1a1a1a, #4a4a4a); /* Background khi kết thúc */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 2s ease;
+}
+
+#end-screen.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.end-content {
+    text-align: center;
+}
+
+.end-content h1 {
+    font-size: 4rem;
+    margin-bottom: 10px;
+}
+
+.end-content h3 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 5px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+    #lyric-text {
+        font-size: 1.2rem;
+    }
+    .end-content h1 {
+        font-size: 2.5rem;
+    }
+}
+
+.hidden { display: none; }
