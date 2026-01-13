@@ -79,6 +79,7 @@ body, html {
 }
 
 .end-content h1 {
+    opacity: 0%;
     font-size: 4rem;
     margin-bottom: 10px;
 }
