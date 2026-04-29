@@ -369,7 +369,7 @@
       overflow: hidden;
       z-index: 20;
     }
-    
+
     .confetti i {
       position: absolute;
       top: -20px;
@@ -383,7 +383,6 @@
     @keyframes fall {
       to {
         transform: translateY(110vh) rotate(720deg);
-        opacity: .8;
       }
     }
 
@@ -629,7 +628,7 @@
       return correct;
     }
 
-     function launchConfetti() {
+    function launchConfetti() {
       confetti.innerHTML = "";
       const colors = ["#d3a84d", "#eadfc7", "#8c2f25", "#2f8b58", "#fff4cf"];
 
@@ -642,13 +641,12 @@
         piece.style.transform = `rotate(${Math.random() * 360}deg)`;
         confetti.appendChild(piece);
       }
+
       setTimeout(() => {
         confetti.innerHTML = "";
       }, 3800);
     }
-    checkBtn.addEventListener("click", () => {
-      const correct = updateScore(true);
-      const placedCards = document.querySelectorAll(".drop-zone .event-card").length;
+
     checkBtn.addEventListener("click", () => {
       const correct = updateScore(true);
       const placedCards = document.querySelectorAll(".drop-zone .event-card").length;
@@ -675,7 +673,7 @@
         zone.classList.remove("correct", "wrong", "over");
       });
       scoreEl.textContent = "0/3";
-      messageEl.textContent = "Gợi ý: đừng chỉ nhìn hành động, hãy hỏi “xã hội nào đã đẩy nhân vật đến đó?”.";
+      messageEl.textContent = "Gợi ý: Đừng chỉ phán đoán dựa trên hành động, hãy tìm hiểu động cơ đẩy nhân vật đến kết cục này?";
       extension.classList.remove("show");
       suggestion.classList.remove("show");
       answerText.value = "";
