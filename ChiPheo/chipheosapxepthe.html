@@ -243,28 +243,71 @@
       margin-bottom: 20px;
     }
 
-    .confetti {
+     .celebration {
       position: fixed;
-      top: -20px;
-      width: 12px;
-      height: 18px;
-      border-radius: 3px;
-      animation: fall 1.8s linear forwards;
-      z-index: 100;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      place-items: center;
+      background: rgba(0, 0, 0, .72);
+      backdrop-filter: blur(4px);
+      overflow: hidden;
     }
 
-    @keyframes pop {
-      from { transform: scale(0.75); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+    .celebration.show {
+      display: grid;
+      animation: fadeIn .35s ease forwards;
+    }
+
+    .celebration-box {
+      width: min(560px, 90vw);
+      padding: 34px 26px;
+      text-align: center;
+      border-radius: 28px;
+      background: linear-gradient(135deg, #fff0bd, #d7a94e 55%, #8f6121);
+      color: #211407;
+      border: 3px solid rgba(255,255,255,.6);
+      box-shadow: 0 24px 80px rgba(0,0,0,.55);
+      animation: popUp .6s cubic-bezier(.2, 1.4, .4, 1) forwards;
+    }
+
+    .celebration-box h2 {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      margin-bottom: 10px;
+    }
+
+    .celebration-box p {
+      font-size: 1.12rem;
+      line-height: 1.55;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+
+    .confetti {
+      position: absolute;
+      top: -20px;
+      width: 10px;
+      height: 18px;
+      border-radius: 3px;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes popUp {
+      from { transform: scale(.72) translateY(25px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
     }
 
     @keyframes fall {
       to {
         transform: translateY(110vh) rotate(720deg);
-        opacity: 0;
+        opacity: .8;
       }
     }
-
     @media (max-width: 720px) {
       body {
         padding: 14px;
@@ -530,26 +573,58 @@
       }
     }
 
-    function showWin() {
-      winModal.classList.add("show");
-      winSound.currentTime = 0;
-      winSound.play().catch(() => {});
-      launchConfetti();
+    function playWinSound() {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+
+      const audioCtx = new AudioContext();
+      const notes = [523.25, 659.25, 783.99, 1046.5];
+
+      notes.forEach((freq, index) => {
+        const oscillator = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        oscillator.type = "triangle";
+        oscillator.frequency.value = freq;
+        oscillator.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        const start = audioCtx.currentTime + index * 0.13;
+        gain.gain.setValueAtTime(0, start);
+        gain.gain.linearRampToValueAtTime(0.22, start + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, start + 0.18);
+
+        oscillator.start(start);
+        oscillator.stop(start + 0.2);
+      });
     }
 
     function launchConfetti() {
-      const colors = ["#ffcc66", "#ff7a59", "#7bd88f", "#8ec5ff", "#d7a2ff"];
+      const colors = ["#ffe066", "#ff6b6b", "#51cf66", "#74c0fc", "#f783ac", "#b197fc"];
 
-      for (let i = 0; i < 80; i++) {
-        const piece = document.createElement("div");
+      for (let i = 0; i < 90; i++) {
+        const piece = document.createElement("span");
         piece.className = "confetti";
         piece.style.left = Math.random() * 100 + "vw";
         piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-        piece.style.animationDelay = Math.random() * 0.7 + "s";
-        document.body.appendChild(piece);
+        piece.style.animationDuration = 1.8 + Math.random() * 1.8 + "s";
+        piece.style.animationDelay = Math.random() * 0.35 + "s";
+        piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+        celebration.appendChild(piece);
 
-        setTimeout(() => piece.remove(), 2600);
+        setTimeout(() => piece.remove(), 4200);
       }
+    }
+
+    function showCelebration() {
+      celebration.classList.add("show");
+      playWinSound();
+      launchConfetti();
+    }
+
+    function hideCelebration() {
+      celebration.classList.remove("show");
+      celebration.querySelectorAll(".confetti").forEach(piece => piece.remove());
     }
 
     document.getElementById("checkBtn").addEventListener("click", checkAnswer);
