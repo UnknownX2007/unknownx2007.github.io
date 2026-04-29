@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phân loại góc nhìn trong đoạn trích Chí Phèo</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: system-ui;
+      color: #f3efe6;
+      background-image: url("langVuDai.png");
+      background-repeat: no-repeat;
+	background-size: cover;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(to top, rgba(0,0,0,.55), transparent 45%),
+        repeating-linear-gradient(90deg, transparent 0 30px, rgba(255,255,255,.025) 31px 32px);
+      opacity: .75;
+      z-index: -1;
+    }
+
+    .village-silhouette {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 180px;
+      background:
+        radial-gradient(ellipse at 10% 100%, #111 0 38px, transparent 39px),
+        radial-gradient(ellipse at 22% 100%, #101010 0 60px, transparent 61px),
+        radial-gradient(ellipse at 45% 100%, #101010 0 45px, transparent 46px),
+        radial-gradient(ellipse at 68% 100%, #111 0 65px, transparent 66px),
+        radial-gradient(ellipse at 90% 100%, #101010 0 52px, transparent 53px),
+        linear-gradient(to top, #0b0d0d 0 55px, transparent 56px);
+      opacity: .75;
+      z-index: -1;
+    }
+
+    .container {
+      width: min(1180px, 94vw);
+      margin: 0 auto;
+      padding: 30px 0 42px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+      padding: 22px;
+      border: 1px solid rgba(222, 201, 154, .28);
+      border-radius: 24px;
+      background: rgba(15, 17, 17, .58);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, .35);
+      backdrop-filter: blur(5px);
+    }
+
+    h1 {
+      font-size: clamp(1.7rem, 3.5vw, 3rem);
+      letter-spacing: .5px;
+      color: #ffe5a8;
+      text-shadow: 0 3px 12px rgba(0,0,0,.8);
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #ddd2bd;
+      line-height: 1.6;
+      max-width: 850px;
+      margin: 0 auto;
+      font-size: 1.02rem;
+    }
+
+    .scorebar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 237, 188, .12);
+      border: 1px solid rgba(255, 237, 188, .25);
+      color: #ffe8b0;
+      font-weight: 700;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: #d7a94e;
+      color: #21170a;
+      font-weight: 800;
+      box-shadow: 0 8px 18px rgba(0,0,0,.35);
+      transition: transform .2s, filter .2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    .game-layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .card-bank,
+    .drop-area {
+      border-radius: 24px;
+      background: rgba(14, 16, 16, .62);
+      border: 1px solid rgba(222, 201, 154, .25);
+      box-shadow: 0 18px 40px rgba(0,0,0,.35);
+      backdrop-filter: blur(5px);
+    }
+
+    .card-bank {
+      padding: 18px;
+      position: sticky;
+      top: 16px;
+    }
+
+    .section-title {
+      color: #ffe1a1;
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cards {
+      display: grid;
+      gap: 12px;
+      min-height: 120px;
+    }
+
+    .quote-card {
+      padding: 13px 14px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #f0dfb8, #caa86b);
+      color: #231709;
+      line-height: 1.45;
+      font-size: .96rem;
+      border: 2px solid rgba(255,255,255,.3);
+      box-shadow: 0 8px 18px rgba(0,0,0,.28);
+      cursor: grab;
+      user-select: none;
+      transition: transform .2s, box-shadow .2s, opacity .2s;
+    }
+
+    .quote-card:active {
+      cursor: grabbing;
+    }
+
+    .quote-card.dragging {
+      opacity: .55;
+      transform: scale(.98) rotate(-1deg);
+    }
+
+    .drop-area {
+      padding: 18px;
+    }
+
+    .zones {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .zone {
+      min-height: 560px;
+      border-radius: 22px;
+      padding: 14px;
+      background: rgba(255, 255, 255, .055);
+      border: 2px dashed rgba(255, 226, 160, .28);
+      transition: transform .2s, border-color .2s, background .2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .zone::after {
+      content: "";
+      position: absolute;
+      inset: auto -30px -45px -30px;
+      height: 95px;
+      background: radial-gradient(ellipse, rgba(0,0,0,.35), transparent 62%);
+      pointer-events: none;
+    }
+
+    .zone.over {
+      transform: translateY(-4px);
+      border-color: #ffd27a;
+      background: rgba(255, 210, 122, .12);
+    }
+
+    .zone-header {
+      text-align: center;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,.18);
+    }
+
+    .icon {
+      width: 105px;
+      height: 105px;
+      margin: 0 auto 10px;
+      border-radius: 24px;
+      display: grid;
+      place-items: center;
+      font-size: 3rem;
+      background: rgba(0,0,0,.32);
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: inset 0 0 25px rgba(0,0,0,.35);
+    }
+
+    .zone h2 {
+      font-size: 1.12rem;
+      color: #ffe0a0;
+      margin-bottom: 5px;
+    }
+
+    .zone p {
+      font-size: .87rem;
+      color: #d8cfbf;
+      line-height: 1.45;
+    }
+
+    .zone-cards {
+      display: grid;
+      gap: 10px;
+      min-height: 345px;
+      align-content: start;
+    }
+
+    .quote-card.correct {
+      background: linear-gradient(135deg, #d8f0bf, #8fbd69);
+      border-color: #eaffd0;
+    }
+
+    .quote-card.wrong {
+      background: linear-gradient(135deg, #f0bfbf, #b45f5f);
+      border-color: #ffd2d2;
+    }
+
+    .feedback {
+      margin-top: 18px;
+      padding: 14px 16px;
+      min-height: 52px;
+      border-radius: 18px;
+      background: rgba(0,0,0,.3);
+      border: 1px solid rgba(255,255,255,.15);
+      color: #f5ead3;
+      line-height: 1.5;
+    }
+
+    .tiny-note {
+      margin-top: 10px;
+      color: #cbbfae;
+      font-size: .87rem;
+      text-align: center;
+    }
+
+    @media (max-width: 960px) {
+      .game-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .card-bank {
+        position: static;
+      }
+
+      .zones {
+        grid-template-columns: 1fr;
+      }
+
+      .zone {
+        min-height: 360px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="village-silhouette"></div>
+
+  <main class="container">
+    <header>
+      <h1>Ai đang nhìn? Ai đang nghĩ?</h1>
+      <p class="subtitle">
+        Kéo từng câu văn vào đúng khu vực phát ngôn hoặc góc nhìn. Trò chơi giúp học sinh nhận ra lời người kể chuyện, cái nhìn của dân làng Vũ Đại và trạng thái say xỉn của Chí Phèo.
+      </p>
+      <div class="scorebar">
+        <span class="pill">Điểm: <span id="score">0</span>/<span id="total">0</span></span>
+        <button id="checkBtn">Kiểm tra đáp án</button>
+        <button id="resetBtn">Làm lại</button>
+      </div>
+    </header>
+
+    <section class="game-layout">
+      <aside class="card-bank">
+        <h2 class="section-title">🧩 Thẻ câu văn</h2>
+        <div class="cards" id="cardBank"></div>
+        <p class="tiny-note">Gợi ý: có thể kéo thả lại nếu đặt nhầm.</p>
+      </aside>
+
+      <section class="drop-area">
+        <h2 class="section-title">🧺 3 khu vực thả thẻ</h2>
+        <div class="zones">
+          <div class="zone" data-zone="narrator">
+            <div class="zone-header">
+              <div class="icon" style="margin-bottom: 50px"><img src="narrator.png" alt="narrator" style="width:100%;height:100%;object-fit:cover;border-radius:20px;"/></div>
+              <h2>Người kể chuyện</h2>
+              <p>Góc nhìn bên ngoài: quan sát, kể, miêu tả sự việc.</p>
+            </div>
+            <div class="zone-cards"></div>
+          </div>
+
+          <div class="zone" data-zone="villagers">
+            <div class="zone-header">
+              <div class="icon" style="margin-bottom: 50px"><img src="villagers.png" alt="narrator" style="width:100%;height:100%;object-fit:cover;border-radius:20px;"/></div>
+              <h2>Dân làng Vũ Đại</h2>
+              <p>Góc nhìn đám đông bàng quan, sợ hãi, dò xét, xa lánh.</p>
+            </div>
+            <div class="zone-cards"></div>
+          </div>
+          <div class="zone" data-zone="chipheo">
+            <div class="zone-header">
+              <div class="icon" style="margin-bottom: 50px"><img src="chipheo.png" alt="narrator" style="width:100%;height:100%;object-fit:cover;border-radius:20px;"/></div>
+              <h2>Chí Phèo</h2>
+              <p>Góc nhìn kẻ say: tiếng chửi, cảm giác bị bỏ rơi, cô độc.</p>
+            </div>
+            <div class="zone-cards"></div>
+          </div>
+        </div>
+
+        <div class="feedback" id="feedback">
+          Kéo thẻ vào các rổ rồi bấm “Kiểm tra đáp án”. Làng Vũ Đại đang nín thở đợi em phân xử đó nha. 🌫️
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const cardsData = [
+      {
+        id: "c1",
+        text: "Hắn vừa đi vừa chửi.",
+        answer: "narrator"
+      },
+      {
+        id: "c2",
+        text: "Bao giờ cũng thế, cứ rượu xong là hắn chửi.",
+        answer: "narrator"
+      },
+      {
+        id: "c3",
+        text: "Có hề gì? Trời có của riêng nhà nào?",
+        answer: "villagers"
+      },
+      {
+        id: "c4",
+        text: "Tức thật! Tức thật! Ô! Thế này thì tức thật! Tức chết đi được mất!",
+        answer: "chipheo"
+      },
+      {
+        id: "c5",
+        text: "Mẹ kiếp! Thế thì có phí rượu không?",
+        answer: "chipheo"
+      },
+      {
+        id: "c6",
+        text: "Tức mình, hắn chửi ngay tất cả làng Vũ Đại.",
+        answer: "narrator"
+      },
+      {
+        id: "c7",
+        text: "Thế cũng chẳng sao: đời là tất cả nhưng chẳng là ai.",
+        answer: "villagers"
+      },
+      {
+        id: "c8",
+        text: "Thế thì nó có khổ hắn không?",
+        answer: "chipheo"
+      },
+      {
+        id: "c9",
+        text: "Không biết đứa chết mẹ nào lại đẻ ra thân hắn cho hắn khổ đến nông nỗi này? A ha!",
+        answer: "chipheo"
+      },
+      {
+	id: "c11",
+	text: "Hắn nghiến răng vào mà chửi cái đứa đã đẻ ra Chí Phèo.",
+	answer: "narrator"
+      },
+      {
+	id: "c12",
+	text: "Nhưng mà biết đứa nào đã đẻ ra Chí Phèo? Có mà trời biết!",
+	answer: "chipheo"
+      }
+    ];
+
+    const cardBank = document.getElementById("cardBank");
+    const scoreEl = document.getElementById("score");
+    const totalEl = document.getElementById("total");
+    const feedback = document.getElementById("feedback");
+    const checkBtn = document.getElementById("checkBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const zones = document.querySelectorAll(".zone");
+
+    totalEl.textContent = cardsData.length;
+
+    function shuffle(array) {
+      return [...array].sort(() => Math.random() - 0.5);
+    }
+
+    function createCard(card) {
+      const div = document.createElement("div");
+      div.className = "quote-card";
+      div.draggable = true;
+      div.id = card.id;
+      div.dataset.answer = card.answer;
+      div.textContent = card.text;
+
+      div.addEventListener("dragstart", () => {
+        div.classList.add("dragging");
+      });
+
+      div.addEventListener("dragend", () => {
+        div.classList.remove("dragging");
+      });
+
+      return div;
+    }
+
+    function renderCards() {
+      cardBank.innerHTML = "";
+      document.querySelectorAll(".zone-cards").forEach(zone => zone.innerHTML = "");
+
+      shuffle(cardsData).forEach(card => {
+        cardBank.appendChild(createCard(card));
+      });
+
+      scoreEl.textContent = "0";
+      feedback.textContent = "Kéo thẻ vào các rổ rồi bấm “Kiểm tra đáp án”. Làng Vũ Đại đang nín thở đợi em phân xử đó nha. 🌫️";
+    }
+
+    function setupDrop(target) {
+      target.addEventListener("dragover", e => {
+        e.preventDefault();
+        const dragging = document.querySelector(".dragging");
+        if (dragging) target.appendChild(dragging);
+      });
+    }
+
+    setupDrop(cardBank);
+
+    zones.forEach(zone => {
+      const zoneCards = zone.querySelector(".zone-cards");
+      setupDrop(zoneCards);
+
+      zone.addEventListener("dragenter", e => {
+        e.preventDefault();
+        zone.classList.add("over");
+      });
+
+      zone.addEventListener("dragleave", e => {
+        if (!zone.contains(e.relatedTarget)) zone.classList.remove("over");
+      });
+
+      zone.addEventListener("drop", () => {
+        zone.classList.remove("over");
+      });
+    });
+
+    function checkAnswers() {
+      let score = 0;
+      let placed = 0;
+
+      document.querySelectorAll(".quote-card").forEach(card => {
+        card.classList.remove("correct", "wrong");
+        const zone = card.closest(".zone");
+
+        if (!zone) return;
+        placed++;
+
+        if (zone.dataset.zone === card.dataset.answer) {
+          card.classList.add("correct");
+          score++;
+        } else {
+          card.classList.add("wrong");
+        }
+      });
+
+      scoreEl.textContent = score;
+
+      if (placed < cardsData.length) {
+        feedback.textContent = `Em mới đặt ${placed}/${cardsData.length} thẻ. Còn vài thẻ đang lang thang ngoài bờ tre kìa. 🌾`;
+      } else if (score === cardsData.length) {
+        feedback.textContent = "Đúng hết rồi! Em đã phân biệt được ba lớp góc nhìn trong đoạn trích. 🏆";
+      } else {
+        feedback.textContent = `Em đúng ${score}/${cardsData.length} thẻ. Thẻ màu đỏ đang bị lạc rổ, thử đọc lại xem câu đó là lời kể, suy nghĩ đám đông hay tiếng nói của Chí Phèo nhé. 🔍`;
+      }
+    }
+
+    checkBtn.addEventListener("click", checkAnswers);
+    resetBtn.addEventListener("click", renderCards);
+
+    renderCards();
+  </script>
+</body>
+</html>
