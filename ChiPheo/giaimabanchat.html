@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Giải mã bi kịch Chí Phèo</title>
+  <style>
+    :root {
+      --bg: #1b1714;
+      --panel: rgba(45, 35, 27, 0.88);
+      --paper: #eadfc7;
+      --paper-2: #fff4cf;
+      --ink: #2b2118;
+      --muted: #7a6a58;
+      --red: #8c2f25;
+      --red-soft: #b84b3f;
+      --gold: #d3a84d;
+      --green: #2f8b58;
+      --green-soft: #dbf2df;
+      --wrong: #cf3d32;
+      --line: rgba(255, 255, 255, 0.18);
+      --shadow: 0 22px 60px rgba(0, 0, 0, 0.38);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui;
+      color: var(--paper);
+      background: url("langVuDai.png");
+      background-size: cover;
+      background-position: center;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: radial-gradient(circle at center, black, transparent 78%);
+      opacity: 0.55;
+    }
+
+    .app {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 28px 0 44px;
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 22px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(17, 13, 10, 0.68);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .kicker {
+      color: var(--gold);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4.2rem);
+      line-height: 0.96;
+      text-wrap: balance;
+    }
+
+    .subtitle {
+      max-width: 720px;
+      margin: 12px 0 0;
+      color: rgba(234, 223, 199, 0.84);
+      font-size: 1.05rem;
+      line-height: 1.55;
+    }
+
+    .score-card {
+      min-width: 166px;
+      text-align: center;
+      background: linear-gradient(145deg, var(--paper), var(--paper-2));
+      color: var(--ink);
+      border-radius: 20px;
+      padding: 16px;
+      border: 3px double rgba(140, 47, 37, 0.35);
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.28);
+    }
+
+    .score-card strong {
+      display: block;
+      font-size: 2.3rem;
+      color: var(--red);
+      line-height: 1;
+    }
+
+    .score-card span {
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+      overflow: hidden;
+    }
+
+    .panel-title {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .panel-title h2 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+
+    .hint {
+      color: rgba(234, 223, 199, 0.72);
+      font-size: 0.92rem;
+    }
+
+    .cards,
+    .drop-list {
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .event-card,
+    .drop-zone {
+      position: relative;
+      border-radius: 18px;
+      padding: 16px;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .event-card {
+      color: var(--ink);
+      background: linear-gradient(145deg, var(--paper), #f8eac4);
+      border: 2px solid rgba(211, 168, 77, 0.6);
+      cursor: grab;
+      user-select: none;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.23);
+    }
+
+    .event-card:active {
+      cursor: grabbing;
+    }
+
+    .event-card.dragging {
+      opacity: 0.55;
+      transform: rotate(-2deg) scale(0.98);
+    }
+
+    .event-card .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+      font-size: 0.82rem;
+      color: var(--red);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .event-card p,
+    .drop-zone p {
+      margin: 0;
+      line-height: 1.46;
+      font-size: 1rem;
+    }
+
+    .drop-zone {
+      min-height: 142px;
+      display: grid;
+      align-content: start;
+      gap: 12px;
+      border: 2px dashed rgba(234, 223, 199, 0.42);
+      background: rgba(255, 244, 207, 0.08);
+    }
+
+    .drop-zone.over {
+      border-color: var(--gold);
+      background: rgba(211, 168, 77, 0.16);
+      transform: translateY(-2px);
+    }
+
+    .drop-zone.correct {
+      border-style: solid;
+      border-color: var(--green);
+      background: rgba(47, 139, 88, 0.18);
+    }
+
+    .drop-zone.wrong {
+      border-style: solid;
+      border-color: var(--wrong);
+      background: rgba(207, 61, 50, 0.14);
+      animation: shake 0.32s ease;
+    }
+
+    .drop-zone h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      color: var(--gold);
+    }
+
+    .drop-zone .slot {
+      min-height: 62px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      border: 1px dashed rgba(234, 223, 199, 0.28);
+      color: rgba(234, 223, 199, 0.58);
+      font-size: 0.95rem;
+      padding: 10px;
+    }
+
+    .drop-zone .slot .event-card {
+      width: 100%;
+      box-shadow: none;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 0 18px 18px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-family: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.16s ease, filter 0.16s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+    }
+
+    .primary {
+      color: #fff7e3;
+      background: linear-gradient(135deg, var(--red), var(--red-soft));
+      box-shadow: 0 12px 24px rgba(140, 47, 37, 0.32);
+    }
+
+    .secondary {
+      color: var(--ink);
+      background: var(--paper);
+    }
+
+    .message {
+      margin: 0 18px 18px;
+      padding: 13px 15px;
+      min-height: 48px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.08);
+      color: rgba(234, 223, 199, 0.9);
+      line-height: 1.45;
+    }
+
+    .extension {
+      margin-top: 20px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(17, 13, 10, 0.72);
+      box-shadow: var(--shadow);
+      transform-origin: top;
+      display: none;
+    }
+
+    .extension.show {
+      display: block;
+      animation: rise 0.38s ease both;
+    }
+
+    .extension h2 {
+      margin: 0 0 10px;
+      color: var(--gold);
+    }
+
+    .question-box {
+      background: linear-gradient(145deg, var(--paper), var(--paper-2));
+      color: var(--ink);
+      border-radius: 18px;
+      padding: 18px;
+      margin: 16px 0;
+      border: 2px solid rgba(211, 168, 77, 0.55);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 140px;
+      resize: vertical;
+      border: 2px solid rgba(43, 33, 24, 0.2);
+      border-radius: 16px;
+      padding: 14px;
+      font: inherit;
+      color: var(--ink);
+      background: #fff9e9;
+      outline: none;
+      line-height: 1.5;
+    }
+
+    textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px rgba(211, 168, 77, 0.18);
+    }
+
+    .suggestion {
+      display: none;
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 16px;
+      background: var(--green-soft);
+      color: #173f28;
+      line-height: 1.55;
+    }
+
+    .suggestion.show {
+      display: block;
+    }
+
+    .confetti {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      z-index: 20;
+    }
+
+    .confetti i {
+      position: absolute;
+      top: -20px;
+      width: 10px;
+      height: 18px;
+      background: var(--gold);
+      opacity: 0.92;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(720deg);
+      }
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+
+    @media (max-width: 860px) {
+      header,
+      .board {
+        grid-template-columns: 1fr;
+      }
+
+      .score-card {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .app {
+        width: min(100% - 18px, 1180px);
+        padding-top: 12px;
+      }
+
+      header,
+      .panel-title,
+      .cards,
+      .drop-list,
+      .extension {
+        padding: 14px;
+      }
+
+      .actions {
+        padding: 0 14px 14px;
+      }
+
+      button {
+        width: 100%;
+      }
+
+      .drop-zone {
+        min-height: 158px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header>
+      <div>
+        <div class="kicker">Trạm giải mã văn bản</div>
+        <h1>Bi kịch Chí Phèo</h1>
+        <p class="subtitle">
+          Kéo các thẻ <b>Sự việc bề ngoài</b> vào đúng ô <b>Bản chất bên trong</b>. Khi ghép đúng cả 3 thẻ, câu hỏi mở rộng sẽ được mở khóa.
+        </p>
+      </div>
+      <div class="score-card" aria-live="polite">
+        <strong id="score">0/3</strong>
+        <span>cặp đã ghép đúng</span>
+      </div>
+    </header>
+
+    <section class="board">
+      <div class="panel">
+        <div class="panel-title">
+          <h2>🃏 Sự việc bề ngoài</h2>
+          <span class="hint">Kéo từng thẻ sang phải</span>
+        </div>
+        <div class="cards" id="cards">
+          <article class="event-card" draggable="true" data-id="1">
+            <span class="tag">Thẻ</span>
+            <p>Lời đay nghiến của bà cô.</p>
+          </article>
+
+          <article class="event-card" draggable="true" data-id="2">
+            <span class="tag">Thẻ</span>
+            <p>Lảm nhảm “đâm chết nó” khi nghĩ đến bà cô, nhưng chân lại đi thẳng đến nhà Bá Kiến.</p>
+          </article>
+
+          <article class="event-card" draggable="true" data-id="3">
+            <span class="tag">Thẻ</span>
+            <p>Lời dân làng: “Hai thằng ấy chết thì không ai tiếc”.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">
+          <h2>🔍 Bản chất bên trong</h2>
+          <span class="hint">Thả vào ô phù hợp</span>
+        </div>
+        <div class="drop-list">
+          <section class="drop-zone" data-answer="1">
+            <h3>Định kiến xã hội khắc nghiệt</h3>
+            <div class="slot">Thả thẻ vào đây</div>
+          </section>
+
+          <section class="drop-zone" data-answer="2">
+            <h3>Vô thức mách bảo tìm đúng kẻ thù cướp đi quyền làm người</h3>
+            <div class="slot">Thả thẻ vào đây</div>
+          </section>
+
+          <section class="drop-zone" data-answer="3">
+            <h3>Sự vô cảm, định kiến chưa được giải quyết</h3>
+            <div class="slot">Thả thẻ vào đây</div>
+          </section>
+        </div>
+        <div class="actions">
+          <button class="primary" id="checkBtn">Kiểm tra đáp án</button>
+          <button class="secondary" id="resetBtn">Làm lại</button>
+        </div>
+        <p class="message" id="message">Gợi ý: đừng chỉ nhìn hành động, hãy hỏi “xã hội nào đã đẩy nhân vật đến đó?”.</p>
+      </div>
+    </section>
+
+    <section class="extension" id="extension">
+      <h2>🌙 Nhiệm vụ 2: Câu hỏi mở rộng</h2>
+      <div class="question-box">
+        <p><b>Câu hỏi:</b> Dựa vào thái độ đám đông, hãy giải mã hình ảnh <b>“cái lò gạch cũ”</b> và ý nghĩa của <b>kết thúc mở</b> trong tác phẩm.</p>
+        <textarea id="answerText" placeholder="Viết câu trả lời của em ở đây..."></textarea>
+      </div>
+      <div class="actions" style="padding: 0;">
+        <button class="primary" id="suggestBtn">Xem gợi ý trả lời</button>
+        <button class="secondary" id="copyBtn">Copy bài làm</button>
+      </div>
+      <div class="suggestion" id="suggestion">
+        <b>Gợi ý:</b> Thái độ của dân làng cho thấy cái chết của Chí Phèo chưa làm xã hội thay đổi. Họ vẫn vô cảm, vẫn nhìn con người bằng định kiến. Vì vậy, hình ảnh “cái lò gạch cũ” ở cuối truyện gợi nguy cơ bi kịch sẽ lặp lại: có thể sẽ lại có một đứa trẻ bị bỏ rơi, lớn lên trong sự ruồng bỏ, rồi tiếp tục bị xã hội biến thành một “Chí Phèo” khác. Kết thúc mở khiến người đọc day dứt, vì vấn đề không dừng ở số phận một cá nhân mà là căn bệnh của cả cộng đồng.
+      </div>
+    </section>
+  </main>
+
+  <div class="confetti" id="confetti"></div>
+
+  <script>
+    const cardsContainer = document.getElementById("cards");
+    const dropZones = document.querySelectorAll(".drop-zone");
+    const scoreEl = document.getElementById("score");
+    const messageEl = document.getElementById("message");
+    const checkBtn = document.getElementById("checkBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const extension = document.getElementById("extension");
+    const suggestBtn = document.getElementById("suggestBtn");
+    const suggestion = document.getElementById("suggestion");
+    const copyBtn = document.getElementById("copyBtn");
+    const answerText = document.getElementById("answerText");
+    const confetti = document.getElementById("confetti");
+
+    let draggedCard = null;
+    let completed = false;
+
+    function bindCardEvents(card) {
+      card.addEventListener("dragstart", () => {
+        draggedCard = card;
+        card.classList.add("dragging");
+      });
+
+      card.addEventListener("dragend", () => {
+        card.classList.remove("dragging");
+        draggedCard = null;
+      });
+    }
+
+    document.querySelectorAll(".event-card").forEach(bindCardEvents);
+
+    dropZones.forEach(zone => {
+      zone.addEventListener("dragover", event => {
+        event.preventDefault();
+        zone.classList.add("over");
+      });
+
+      zone.addEventListener("dragleave", () => {
+        zone.classList.remove("over");
+      });
+
+      zone.addEventListener("drop", event => {
+        event.preventDefault();
+        zone.classList.remove("over");
+
+        if (!draggedCard || completed) return;
+
+        const slot = zone.querySelector(".slot");
+        const existingCard = slot.querySelector(".event-card");
+
+        if (existingCard) {
+          cardsContainer.appendChild(existingCard);
+        }
+
+        slot.innerHTML = "";
+        slot.appendChild(draggedCard);
+        clearFeedback();
+        updateScore(false);
+      });
+    });
+
+    cardsContainer.addEventListener("dragover", event => {
+      event.preventDefault();
+    });
+
+    cardsContainer.addEventListener("drop", event => {
+      event.preventDefault();
+      if (!draggedCard || completed) return;
+      cardsContainer.appendChild(draggedCard);
+      clearFeedback();
+      updateScore(false);
+    });
+
+    function clearFeedback() {
+      dropZones.forEach(zone => {
+        zone.classList.remove("correct", "wrong");
+      });
+      messageEl.textContent = "Tiếp tục giải mã nhé. Mỗi thẻ là một lớp vỏ, bên trong là cả một vết nứt xã hội.";
+    }
+
+    function updateScore(markZones = true) {
+      let correct = 0;
+
+      dropZones.forEach(zone => {
+        const card = zone.querySelector(".event-card");
+        const isCorrect = card && card.dataset.id === zone.dataset.answer;
+
+        if (isCorrect) correct++;
+
+        if (markZones) {
+          zone.classList.remove("correct", "wrong");
+          if (card) zone.classList.add(isCorrect ? "correct" : "wrong");
+        }
+      });
+
+      scoreEl.textContent = `${correct}/3`;
+      return correct;
+    }
+
+    function launchConfetti() {
+      confetti.innerHTML = "";
+      const colors = ["#d3a84d", "#eadfc7", "#8c2f25", "#2f8b58", "#fff4cf"];
+
+      for (let i = 0; i < 60; i++) {
+        const piece = document.createElement("i");
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDuration = 1.7 + Math.random() * 1.8 + "s";
+        piece.style.animationDelay = Math.random() * 0.2 + "s";
+        piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+        confetti.appendChild(piece);
+      }
+
+      setTimeout(() => {
+        confetti.innerHTML = "";
+      }, 3800);
+    }
+
+    checkBtn.addEventListener("click", () => {
+      const correct = updateScore(true);
+      const placedCards = document.querySelectorAll(".drop-zone .event-card").length;
+
+      if (correct === 3) {
+        completed = true;
+        messageEl.textContent = "Chuẩn rồi! Em đã bóc được lớp vỏ bề ngoài và nhìn thấy phần bản chất bên trong. Nhiệm vụ 2 đã mở khóa.";
+        extension.classList.add("show");
+        launchConfetti();
+      } else if (placedCards < 3) {
+        messageEl.textContent = "Còn thẻ chưa được thả. Hãy kéo đủ 3 thẻ vào các ô bản chất trước đã nha.";
+      } else {
+        messageEl.textContent = `Đúng ${correct}/3. Có ô đang bị lệch nghĩa. Thử nhìn xem thẻ nào nói về định kiến, thẻ nào nói về kẻ thù thật sự, thẻ nào nói về thái độ cộng đồng.`;
+      }
+    });
+
+    resetBtn.addEventListener("click", () => {
+      completed = false;
+      dropZones.forEach(zone => {
+        const slot = zone.querySelector(".slot");
+        const card = slot.querySelector(".event-card");
+        if (card) cardsContainer.appendChild(card);
+        slot.innerHTML = "Thả thẻ vào đây";
+        zone.classList.remove("correct", "wrong", "over");
+      });
+      scoreEl.textContent = "0/3";
+      messageEl.textContent = "Gợi ý: đừng chỉ nhìn hành động, hãy hỏi “xã hội nào đã đẩy nhân vật đến đó?”.";
+      extension.classList.remove("show");
+      suggestion.classList.remove("show");
+      answerText.value = "";
+    });
+
+    suggestBtn.addEventListener("click", () => {
+      suggestion.classList.toggle("show");
+      suggestBtn.textContent = suggestion.classList.contains("show") ? "Ẩn gợi ý" : "Xem gợi ý trả lời";
+    });
+
+    copyBtn.addEventListener("click", async () => {
+      const text = answerText.value.trim();
+      if (!text) {
+        alert("Bạn chưa viết câu trả lời để copy nè.");
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(text);
+        copyBtn.textContent = "Đã copy ✓";
+        setTimeout(() => copyBtn.textContent = "Copy bài làm", 1400);
+      } catch (error) {
+        alert("Trình duyệt chưa cho phép copy tự động. Bạn có thể bôi đen phần bài làm rồi Ctrl + C nhé.");
+      }
+    });
+  </script>
+</body>
+</html>

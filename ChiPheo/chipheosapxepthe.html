@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game sắp xếp thẻ ảnh - Chí Phèo</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: system-ui;
+      color: #2b211b;
+      background: url("langVuDai.png");
+      background-size: cover;
+      background-position: center;
+      padding: 24px;
+    }
+
+    .game-shell {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 22px;
+      color: #fff7e8;
+      text-shadow: 0 3px 12px rgba(0, 0, 0, 0.55);
+    }
+
+    header h1 {
+      font-size: clamp(28px, 4vw, 48px);
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      font-size: 17px;
+      opacity: 0.95;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    button, select {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+    }
+
+    select {
+      color: #3a281b;
+      background: #fff3d5;
+      outline: 3px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #f7c56b, #e28a3b);
+      color: #21160f;
+    }
+
+    .btn-secondary {
+      background: #f9ead0;
+      color: #4b3322;
+    }
+
+    .btn-danger {
+      background: #4b3322;
+      color: #fff4df;
+    }
+
+    .board {
+      background: rgba(255, 248, 232, 0.93);
+      border: 3px solid rgba(91, 58, 31, 0.45);
+      border-radius: 28px;
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.35);
+      padding: 20px;
+    }
+
+    .status-box {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      background: #3f2a1c;
+      color: #fff6e5;
+      border-radius: 20px;
+      padding: 15px 18px;
+      margin-bottom: 18px;
+    }
+
+    .status-box strong {
+      color: #ffd98b;
+    }
+
+    .score-pill {
+      background: #fff0c7;
+      color: #3b281b;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .cards-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-height: 500px;
+    }
+
+    .card {
+      display: grid;
+      grid-template-columns: 92px 1fr auto;
+      gap: 16px;
+      align-items: center;
+      background: linear-gradient(135deg, #fff9ed, #f6ddb7);
+      border: 2px solid rgba(91, 58, 31, 0.35);
+      border-radius: 22px;
+      padding: 13px;
+      box-shadow: 0 10px 18px rgba(89, 55, 30, 0.16);
+      cursor: grab;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+      user-select: none;
+    }
+
+    .card:active {
+      cursor: grabbing;
+    }
+
+    .card.dragging {
+      opacity: 0.55;
+      transform: scale(0.985);
+    }
+
+    .card.correct {
+      border-color: #2f8f5b;
+      background: linear-gradient(135deg, #f0fff4, #d5f1d8);
+    }
+
+    .card.wrong {
+      border-color: #b94d3f;
+      background: linear-gradient(135deg, #fff2ec, #f7c7b8);
+    }
+
+    .thumb {
+      width: 92px;
+      height: 92px;
+      border-radius: 18px;
+      object-fit: cover;
+      background: #d2b48c;
+      border: 3px solid rgba(255, 255, 255, 0.65);
+    }
+
+    .card-content h3 {
+      font-size: 20px;
+      margin-bottom: 6px;
+      color: #3b2619;
+    }
+
+    .card-content p {
+      font-size: 15px;
+      line-height: 1.45;
+      color: #5b402d;
+    }
+
+    .position-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      font-weight: 950;
+      color: #fff7e8;
+      background: #5a3824;
+      box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.18);
+    }
+
+    .result {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 20px;
+      background: #fff3d3;
+      border: 2px dashed #9b6a35;
+      font-size: 17px;
+      line-height: 1.5;
+      display: none;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 99;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-card {
+      max-width: 560px;
+      width: 100%;
+      text-align: center;
+      border-radius: 30px;
+      padding: 34px 24px;
+      background: linear-gradient(135deg, #fff8e7, #ffd88f);
+      border: 4px solid #fff1c2;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45);
+      animation: pop 0.45s ease;
+    }
+
+    .modal-card h2 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .modal-card p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .confetti {
+      position: fixed;
+      top: -20px;
+      width: 12px;
+      height: 18px;
+      border-radius: 3px;
+      animation: fall 1.8s linear forwards;
+      z-index: 100;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.75); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 14px;
+      }
+
+      .board {
+        padding: 14px;
+      }
+
+      .status-box {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .card {
+        grid-template-columns: 72px 1fr;
+      }
+
+      .thumb {
+        width: 72px;
+        height: 72px;
+      }
+
+      .position-badge {
+        grid-column: 1 / -1;
+        width: 100%;
+        border-radius: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="game-shell">
+    <header>
+      <h1>🧩 Sắp xếp thẻ ảnh: Chí Phèo</h1>
+      <p>Kéo thả các thẻ để xếp đúng theo chế độ đang chọn.</p>
+    </header>
+
+    <section class="toolbar">
+      <select id="modeSelect" aria-label="Chọn chế độ chơi">
+        <option value="timeline">1. Trình tự thời gian thật</option>
+        <option value="story">2. Trình tự gốc trong truyện</option>
+      </select>
+      <button class="btn-primary" id="checkBtn">Kiểm tra đáp án</button>
+      <button class="btn-secondary" id="hintBtn">Gợi ý</button>
+      <button class="btn-danger" id="shuffleBtn">Xáo thẻ</button>
+    </section>
+
+    <section class="board">
+      <div class="status-box">
+        <div id="instruction">
+          Chế độ hiện tại: <strong>Trình tự thời gian thật</strong>. Hãy xếp từ lúc Chí Phèo bị bỏ rơi đến kết cục bi kịch.
+        </div>
+        <div class="score-pill" id="scorePill">0/8 đúng</div>
+      </div>
+
+      <div class="cards-list" id="cardsList"></div>
+      <div class="result" id="resultBox"></div>
+    </section>
+  </main>
+
+  <div class="modal" id="winModal">
+    <div class="modal-card">
+      <h2>🎉 Chính xác!</h2>
+      <p id="winText">Bạn đã sắp xếp đúng toàn bộ 8 thẻ.</p>
+      <button class="btn-primary" id="closeModalBtn">Chơi tiếp</button>
+    </div>
+  </div>
+
+  <audio id="winSound" preload="auto">
+    <source src="success.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script>
+    const cards = [
+      {
+        id: "curse",
+        title: "Tiếng chửi mở đầu",
+        image: "the1.png",
+        detail: "Chí Phèo vừa đi vừa chửi giữa đường làng; dân làng đóng cửa hoặc quay đi.",
+      },
+      {
+        id: "kiln",
+        title: "Lò gạch cũ",
+        image: "the2.png",
+        detail: "Một người đi thả ống lươn phát hiện đứa trẻ trần truồng, xám ngắt bị bỏ lại bên lò gạch bỏ không.",
+      },
+      {
+        id: "return",
+        title: "Trở về làng",
+        image: "the3.png",
+        detail: "Chí Phèo sau khi đi tù trở về làng với ngoại hình dữ dằn, khiến mọi người xa lánh.",
+      },
+      {
+        id: "baKienGate",
+        title: "Ăn vạ nhà Bá Kiến",
+        image: "the4.png",
+        detail: "Chí Phèo gây náo động trước nhà Bá Kiến, khiến dân làng kéo đến xem.",
+      },
+      {
+        id: "henchman",
+        title: "Làm tay sai cho Bá Kiến",
+        image: "the5.png",
+        detail: "Chí Phèo bị Bá Kiến lợi dụng, trở thành công cụ đe dọa và phá rối dân làng.",
+      },
+      {
+        id: "awakening",
+        title: "Sự thức tỉnh",
+        image: "the6.png",
+        detail: "Trong túp lều ven sông, bát cháo hành của Thị Nở đánh thức phần người lương thiện trong Chí Phèo.",
+      },
+      {
+        id: "baKienEnd",
+        title: "Đâm Bá Kiến",
+        image: "the7.png",
+        detail: "Chí Phèo tìm đến Bá Kiến trong cơn phẫn uất, dẫn đến kết cục bi kịch.",
+      },
+      {
+        id: "villagers",
+        title: "Sự dửng dưng của dân làng",
+        image: "the8.png",
+        detail: "Dân làng đứng nhìn và bàn tán, gần như không ai thật sự thương xót.",
+      },
+    ];
+
+    const answers = {
+      timeline: ["kiln", "return", "curse", "baKienGate", "henchman", "awakening", "baKienEnd", "villagers"],
+      story: ["curse", "kiln", "return", "baKienGate", "henchman", "awakening", "baKienEnd", "villagers"],
+    };
+
+    const hints = {
+      timeline: "Gợi ý: Nếu xếp theo đời Chí Phèo, thẻ lò gạch phải đứng đầu. Cảnh tiếng chửi là đoạn mở truyện nhưng không phải mốc thời gian sớm nhất.",
+      story: "Gợi ý: Văn bản gốc mở bằng tiếng chửi, sau đó người kể mới quay ngược về lai lịch lò gạch cũ.",
+    };
+
+    const instructions = {
+      timeline: "Chế độ hiện tại: <strong>Trình tự thời gian thật</strong>. Hãy xếp từ lúc Chí Phèo bị bỏ rơi đến kết cục bi kịch.",
+      story: "Chế độ hiện tại: <strong>Trình tự gốc trong truyện</strong>. Hãy xếp theo cách Nam Cao tổ chức mạch kể trong tác phẩm.",
+    };
+
+    const cardsList = document.getElementById("cardsList");
+    const modeSelect = document.getElementById("modeSelect");
+    const instruction = document.getElementById("instruction");
+    const scorePill = document.getElementById("scorePill");
+    const resultBox = document.getElementById("resultBox");
+    const winModal = document.getElementById("winModal");
+    const winSound = document.getElementById("winSound");
+
+    let currentCards = [...cards];
+
+    function shuffle(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function renderCards() {
+      cardsList.innerHTML = "";
+
+      currentCards.forEach((card, index) => {
+        const cardEl = document.createElement("article");
+        cardEl.className = "card";
+        cardEl.draggable = true;
+        cardEl.dataset.id = card.id;
+
+        cardEl.innerHTML = `
+          <img class="thumb" src="${card.image}" alt="${card.title}" onerror="this.src='https://placehold.co/180x180?text=Ảnh'" />
+          <div class="card-content">
+            <h3>${card.title}</h3>
+            <p>${card.detail}</p>
+          </div>
+          <div class="position-badge">${index + 1}</div>
+        `;
+
+        cardsList.appendChild(cardEl);
+      });
+
+      addDragEvents();
+      updateScore(false);
+    }
+
+    function addDragEvents() {
+      const cardElements = document.querySelectorAll(".card");
+
+      cardElements.forEach(card => {
+        card.addEventListener("dragstart", () => {
+          card.classList.add("dragging");
+        });
+
+        card.addEventListener("dragend", () => {
+          card.classList.remove("dragging");
+          syncCurrentCardsFromDOM();
+          renderCards();
+        });
+      });
+    }
+
+    cardsList.addEventListener("dragover", event => {
+      event.preventDefault();
+      const draggingCard = document.querySelector(".dragging");
+      const afterElement = getDragAfterElement(cardsList, event.clientY);
+
+      if (!draggingCard) return;
+
+      if (afterElement == null) {
+        cardsList.appendChild(draggingCard);
+      } else {
+        cardsList.insertBefore(draggingCard, afterElement);
+      }
+    });
+
+    function getDragAfterElement(container, y) {
+      const draggableElements = [...container.querySelectorAll(".card:not(.dragging)")];
+
+      return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+
+        if (offset < 0 && offset > closest.offset) {
+          return { offset, element: child };
+        }
+        return closest;
+      }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+
+    function syncCurrentCardsFromDOM() {
+      const ids = [...document.querySelectorAll(".card")].map(card => card.dataset.id);
+      currentCards = ids.map(id => cards.find(card => card.id === id));
+    }
+
+    function updateScore(showColors = true) {
+      const mode = modeSelect.value;
+      const answer = answers[mode];
+      const cardElements = [...document.querySelectorAll(".card")];
+      let correctCount = 0;
+
+      cardElements.forEach((cardEl, index) => {
+        cardEl.classList.remove("correct", "wrong");
+        if (cardEl.dataset.id === answer[index]) {
+          correctCount++;
+          if (showColors) cardEl.classList.add("correct");
+        } else if (showColors) {
+          cardEl.classList.add("wrong");
+        }
+      });
+
+      scorePill.textContent = `${correctCount}/8 đúng`;
+      return correctCount;
+    }
+
+    function checkAnswer() {
+      const correctCount = updateScore(true);
+      resultBox.classList.add("show");
+
+      if (correctCount === cards.length) {
+        resultBox.innerHTML = "🎊 Xuất sắc! Bạn đã sắp xếp đúng toàn bộ trình tự.";
+        showWin();
+      } else {
+        resultBox.innerHTML = `Bạn đang đúng <strong>${correctCount}/8</strong> thẻ. Các thẻ màu xanh là đúng vị trí, màu cam là cần đổi chỗ.`;
+      }
+    }
+
+    function showWin() {
+      winModal.classList.add("show");
+      winSound.currentTime = 0;
+      winSound.play().catch(() => {});
+      launchConfetti();
+    }
+
+    function launchConfetti() {
+      const colors = ["#ffcc66", "#ff7a59", "#7bd88f", "#8ec5ff", "#d7a2ff"];
+
+      for (let i = 0; i < 80; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confetti";
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDelay = Math.random() * 0.7 + "s";
+        document.body.appendChild(piece);
+
+        setTimeout(() => piece.remove(), 2600);
+      }
+    }
+
+    document.getElementById("checkBtn").addEventListener("click", checkAnswer);
+
+    document.getElementById("hintBtn").addEventListener("click", () => {
+      resultBox.classList.add("show");
+      resultBox.innerHTML = `💡 ${hints[modeSelect.value]}`;
+    });
+
+    document.getElementById("shuffleBtn").addEventListener("click", () => {
+      currentCards = shuffle(cards);
+      resultBox.classList.remove("show");
+      renderCards();
+    });
+
+    document.getElementById("closeModalBtn").addEventListener("click", () => {
+      winModal.classList.remove("show");
+    });
+
+    modeSelect.addEventListener("change", () => {
+      instruction.innerHTML = instructions[modeSelect.value];
+      resultBox.classList.remove("show");
+      updateScore(false);
+    });
+
+    currentCards = shuffle(cards);
+    renderCards();
+  </script>
+</body>
+</html>
