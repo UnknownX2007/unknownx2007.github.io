@@ -499,34 +499,19 @@
     }
 
     function updateScore(showColors = true) {
-      let hasWon = false; // thêm biến global
+      const mode = modeSelect.value;
+      const answer = answers[mode];
+      const cardElements = [...document.querySelectorAll(".card")];
+      let correctCount = 0;
 
-function updateScore(showColors = true) {
-  const mode = modeSelect.value;
-  const answer = answers[mode];
-  const cardElements = [...document.querySelectorAll(".card")];
-  let correctCount = 0;
-
-  cardElements.forEach((cardEl, index) => {
-    cardEl.classList.remove("correct", "wrong");
-    if (cardEl.dataset.id === answer[index]) {
-      correctCount++;
-      if (showColors) cardEl.classList.add("correct");
-    } else if (showColors) {
-      cardEl.classList.add("wrong");
-    }
-  });
-
-  scorePill.textContent = `${correctCount}/8 đúng`;
-
-  // 🎉 AUTO CELEBRATION khi đủ 8/8
-  if (correctCount === cards.length && !hasWon) {
-    hasWon = true;
-    showWin();
-  }
-
-  return correctCount;
-}
+      cardElements.forEach((cardEl, index) => {
+        cardEl.classList.remove("correct", "wrong");
+        if (cardEl.dataset.id === answer[index]) {
+          correctCount++;
+          if (showColors) cardEl.classList.add("correct");
+        } else if (showColors) {
+          cardEl.classList.add("wrong");
+        }
       });
 
       scorePill.textContent = `${correctCount}/8 đúng`;
