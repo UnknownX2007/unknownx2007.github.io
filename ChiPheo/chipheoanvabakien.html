@@ -5,59 +5,333 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Video khởi động - Chí Phèo</title>
 
-  <!-- Dùng style.css có sẵn của dự án -->
+  <!-- Nếu thư mục có style.css thì vẫn dùng được -->
   <link rel="stylesheet" href="style.css" />
+
+  <!-- CSS bổ sung để trang không bị trắng dù style.css chưa ăn -->
+  <style>
+    :root {
+      --black: #08070a;
+      --dark: #17100f;
+      --paper: #f2dfb8;
+      --paper-light: #fff2cf;
+      --red: #8d1717;
+      --red-light: #c84735;
+      --gold: #d6a84f;
+      --moon: #f8ddb0;
+      --line: rgba(255, 230, 180, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--paper-light);
+      background:
+        linear-gradient(rgba(5, 4, 5, 0.72), rgba(5, 4, 5, 0.9)),
+        radial-gradient(circle at 50% 18%, rgba(248, 221, 176, 0.28), transparent 28%),
+        linear-gradient(135deg, #1a0e0d, #050507 70%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        url("langVuDai.jpg") center / cover no-repeat,
+        linear-gradient(135deg, #1a0e0d, #050507);
+      opacity: 0.28;
+      filter: grayscale(30%) contrast(110%);
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,0.65), transparent 18%, transparent 82%, rgba(0,0,0,0.7)),
+        radial-gradient(circle at center, transparent 0 45%, rgba(0,0,0,0.52) 100%);
+    }
+
+    .video-page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 34px 0 42px;
+    }
+
+    .topbar {
+      min-height: 58px;
+      padding: 12px 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(10, 8, 8, 0.76);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.42);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      backdrop-filter: blur(8px);
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      line-height: 1.1;
+    }
+
+    .brand span {
+      font-size: 13px;
+      color: var(--gold);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .brand strong {
+      font-size: clamp(18px, 2.5vw, 28px);
+      font-weight: 800;
+      color: var(--paper-light);
+    }
+
+    .back-link {
+      border: 1px solid rgba(214, 168, 79, 0.45);
+      border-radius: 999px;
+      padding: 10px 15px;
+      color: var(--paper-light);
+      text-decoration: none;
+      background: rgba(141, 23, 23, 0.34);
+      transition: 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .back-link:hover {
+      transform: translateY(-1px);
+      background: rgba(141, 23, 23, 0.56);
+    }
+
+    .hero {
+      margin-top: 38px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      padding: 8px 13px;
+      border: 1px solid rgba(214, 168, 79, 0.36);
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.38);
+      color: var(--gold);
+      font-size: 14px;
+      letter-spacing: 0.7px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 6vw, 72px);
+      line-height: 0.95;
+      color: var(--paper-light);
+      text-shadow: 0 8px 30px rgba(0,0,0,0.75);
+    }
+
+    .subtitle {
+      width: min(760px, 100%);
+      margin: 16px auto 0;
+      color: rgba(255, 242, 207, 0.82);
+      font-size: clamp(16px, 2vw, 20px);
+      line-height: 1.55;
+    }
+
+    .video-section {
+      margin-top: 32px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .video-frame {
+      width: min(86vw, 980px);
+      padding: 14px;
+      border: 1px solid rgba(214, 168, 79, 0.38);
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, rgba(255, 235, 180, 0.12), rgba(0, 0, 0, 0.2)),
+        rgba(12, 9, 8, 0.78);
+      box-shadow:
+        0 24px 80px rgba(0, 0, 0, 0.62),
+        inset 0 0 0 1px rgba(255,255,255,0.04);
+    }
+
+    .video-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding: 0 4px;
+      color: var(--paper-light);
+    }
+
+    .video-title h2 {
+      font-size: clamp(18px, 2.4vw, 27px);
+      font-weight: 800;
+    }
+
+    .video-title span {
+      color: var(--gold);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    video {
+      display: block;
+      width: 100%;
+      max-height: 62vh;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: 16px;
+      background: #000;
+      outline: none;
+    }
+
+    .controls {
+      margin-top: 16px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    button {
+      cursor: pointer;
+      border: 1px solid rgba(214, 168, 79, 0.42);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: inherit;
+      font-weight: 800;
+      color: var(--paper-light);
+      background: linear-gradient(180deg, rgba(200, 71, 53, 0.88), rgba(107, 18, 18, 0.92));
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+      transition: 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.08);
+    }
+
+    button.ghost {
+      background: rgba(0, 0, 0, 0.38);
+    }
+
+    .note {
+      width: min(760px, 100%);
+      margin: 22px auto 0;
+      padding: 14px 18px;
+      border-left: 3px solid var(--gold);
+      border-radius: 14px;
+      background: rgba(0, 0, 0, 0.38);
+      color: rgba(255, 242, 207, 0.86);
+      line-height: 1.55;
+      text-align: left;
+    }
+
+    @media (max-width: 768px) {
+      .video-page {
+        width: min(100% - 20px, 1180px);
+        padding-top: 16px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .back-link {
+        width: 100%;
+        text-align: center;
+      }
+
+      .hero {
+        margin-top: 24px;
+      }
+
+      .video-frame {
+        width: 100%;
+        padding: 10px;
+        border-radius: 18px;
+      }
+
+      video {
+        max-height: 48vh;
+        border-radius: 12px;
+      }
+
+      .video-title {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .controls button {
+        flex: 1 1 130px;
+      }
+    }
+  </style>
 </head>
 
-<body class="station-page station-video">
-  <main class="game-screen alley-mode">
+<body>
+  <main class="video-page">
     <header class="topbar">
-      <div class="humanity-box">
-        <span>Video khởi động</span>
-        <div class="humanity-track">
-          <div class="humanity-fill" style="width: 100%;"></div>
-        </div>
+      <div class="brand">
+        <span>Escape Room Văn học</span>
+        <strong>Chí Phèo</strong>
       </div>
 
-      <div class="timer">Chí Phèo</div>
-
-      <div class="locks">
-        <span class="lock broken">▶</span>
-      </div>
+      <a class="back-link" href="index.html">← Trang chủ</a>
     </header>
 
-    <section class="viewport village-alley">
-      <div class="sky dark-sky"></div>
-      <div class="back-layer village-back"></div>
-      <div class="mid-layer narrow-alley"></div>
-      <div class="fog fog-a"></div>
-      <div class="fog fog-b"></div>
+    <section class="hero">
+      <div class="eyebrow">▶ Video khởi động</div>
+      <h1>Chí Phèo ăn vạ Bá Kiến</h1>
+      <p class="subtitle">
+        Xem đoạn video để bước đầu hiểu được về nhân vật Chí Phèo và bầu không khí ở làng Vũ Đại.
+      </p>
+    </section>
 
-      <div class="question-card video-card">
-        <h2>Video</h2>
-        <video controls autoplay muted playsinline width="100%">
-          <source src="chipheoanvabakien.mp4" type="video/mp4" />
+    <section class="video-section">
+      <div class="video-frame">
+        <div class="video-title">
+          <h2>Video</h2>
+          <span>Nhấn phát để bắt đầu</span>
+        </div>
+
+        <!-- Đặt video cùng thư mục với file HTML và đổi tên thành video.mp4 -->
+        <video id="mainVideo" controls playsinline poster="poster.jpg">
+          <source src="video.mp4" type="video/mp4" />
           <source src="video.webm" type="video/webm" />
           Trình duyệt của bạn không hỗ trợ phát video.
         </video>
-      </div>
-    </section>
 
-    <section class="bottom-panel">
-      <div class="dialogue">
-        Hãy xem video để bước vào không khí làng Vũ Đại và chuẩn bị cho hoạt động tiếp theo.
-      </div>
-
-      <div class="control-panel">
-        <button class="main-btn" type="button" onclick="document.querySelector('video').play()">
-          Phát video
-        </button>
-
-        <button class="main-btn ghost" type="button" onclick="document.querySelector('video').pause()">
-          Tạm dừng
-        </button>
+        <div class="controls">
+          <button type="button" onclick="mainVideo.play()">Phát video</button>
+          <button type="button" class="ghost" onclick="mainVideo.pause()">Tạm dừng</button>
+          <button type="button" class="ghost" onclick="mainVideo.requestFullscreen()">Toàn màn hình</button>
+        </div>
       </div>
     </section>
   </main>
+
+  <script>
+    const mainVideo = document.getElementById("mainVideo");
+  </script>
 </body>
 </html>
