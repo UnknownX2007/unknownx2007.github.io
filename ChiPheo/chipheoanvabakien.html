@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trình chiếu video</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #111827, #1f2937);
+      font-family: Arial, sans-serif;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .video-container {
+      width: min(100%, 1000px);
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: clamp(24px, 4vw, 42px);
+      letter-spacing: 0.5px;
+    }
+
+    video {
+      width: 100%;
+      max-height: 75vh;
+      border-radius: 18px;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+      background: #000;
+      outline: none;
+    }
+
+    .note {
+      margin-top: 14px;
+      font-size: 15px;
+      color: #d1d5db;
+    }
+  </style>
+</head>
+<body>
+  <main class="video-container">
+    <h1>Trình chiếu video</h1>
+    <video controls autoplay muted playsinline>
+      <source src="chipheoanvabakien.mp4" type="video/mp4" />
+      <source src="video.webm" type="video/webm" />
+      Trình duyệt của bạn không hỗ trợ phát video.
+    </video>
+
+    <p class="note">
+      Gợi ý: để video chạy được, hãy đặt file video cùng thư mục với file HTML và đổi tên thành <b>video.mp4</b>.
+    </p>
+  </main>
+</body>
