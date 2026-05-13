@@ -3,63 +3,61 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trình chiếu video</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  <title>Video khởi động - Chí Phèo</title>
 
-    body {
-      min-height: 100vh;
-      background: linear-gradient(135deg, #111827, #1f2937);
-      font-family: Arial, sans-serif;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-
-    .video-container {
-      width: min(100%, 1000px);
-      text-align: center;
-    }
-
-    h1 {
-      margin-bottom: 20px;
-      font-size: clamp(24px, 4vw, 42px);
-      letter-spacing: 0.5px;
-    }
-
-    video {
-      width: 100%;
-      max-height: 75vh;
-      border-radius: 18px;
-      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
-      background: #000;
-      outline: none;
-    }
-
-    .note {
-      margin-top: 14px;
-      font-size: 15px;
-      color: #d1d5db;
-    }
-  </style>
+  <!-- Dùng style.css có sẵn của dự án -->
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <main class="video-container">
-    <h1>Trình chiếu video</h1>
-    <video controls autoplay muted playsinline>
-      <source src="chipheoanvabakien.mp4" type="video/mp4" />
-      <source src="video.webm" type="video/webm" />
-      Trình duyệt của bạn không hỗ trợ phát video.
-    </video>
 
-    <p class="note">
-      Gợi ý: để video chạy được, hãy đặt file video cùng thư mục với file HTML và đổi tên thành <b>video.mp4</b>.
-    </p>
+<body class="station-page station-video">
+  <main class="game-screen alley-mode">
+    <header class="topbar">
+      <div class="humanity-box">
+        <span>Video khởi động</span>
+        <div class="humanity-track">
+          <div class="humanity-fill" style="width: 100%;"></div>
+        </div>
+      </div>
+
+      <div class="timer">Chí Phèo</div>
+
+      <div class="locks">
+        <span class="lock broken">▶</span>
+      </div>
+    </header>
+
+    <section class="viewport village-alley">
+      <div class="sky dark-sky"></div>
+      <div class="back-layer village-back"></div>
+      <div class="mid-layer narrow-alley"></div>
+      <div class="fog fog-a"></div>
+      <div class="fog fog-b"></div>
+
+      <div class="question-card video-card">
+        <h2>Video</h2>
+        <video controls autoplay muted playsinline width="100%">
+          <source src="chipheoanvabakien.mp4" type="video/mp4" />
+          <source src="video.webm" type="video/webm" />
+          Trình duyệt của bạn không hỗ trợ phát video.
+        </video>
+      </div>
+    </section>
+
+    <section class="bottom-panel">
+      <div class="dialogue">
+        Hãy xem video để bước vào không khí làng Vũ Đại và chuẩn bị cho hoạt động tiếp theo.
+      </div>
+
+      <div class="control-panel">
+        <button class="main-btn" type="button" onclick="document.querySelector('video').play()">
+          Phát video
+        </button>
+
+        <button class="main-btn ghost" type="button" onclick="document.querySelector('video').pause()">
+          Tạm dừng
+        </button>
+      </div>
+    </section>
   </main>
 </body>
+</html>
