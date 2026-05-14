@@ -147,6 +147,25 @@
       transform: scale(0.985);
     }
 
+
+    .card.selected {
+      outline: 4px solid #ffd36f;
+      box-shadow: 0 0 0 6px rgba(255, 211, 111, 0.26), 0 14px 26px rgba(89, 55, 30, 0.22);
+      transform: translateY(-2px);
+    }
+
+    .card,
+    .thumb,
+    button,
+    select {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .card {
+      -webkit-user-drag: none;
+      touch-action: manipulation;
+    }
+
     .card.correct {
       border-color: #2f8f5b;
       background: linear-gradient(135deg, #f0fff4, #d5f1d8);
@@ -414,6 +433,39 @@
     const winSound = document.getElementById("winSound");
 
     let currentCards = [...cards];
+    let touchSelectedCard = null;
+    let isHtmlDragging = false;
+
+    function clearTouchSelection() {
+      document.querySelectorAll(".card.selected").forEach(card => card.classList.remove("selected"));
+      touchSelectedCard = null;
+    }
+
+    function handleTouchSort(cardEl) {
+      if (isHtmlDragging) return;
+
+      if (!touchSelectedCard) {
+        touchSelectedCard = cardEl;
+        cardEl.classList.add("selected");
+        resultBox.classList.add("show");
+        resultBox.innerHTML = "📱 Trên iPhone/iPad: thẻ đã được chọn. Hãy chạm vào thẻ khác để chuyển thẻ đang chọn đến trước thẻ đó.";
+        return;
+      }
+
+      if (touchSelectedCard === cardEl) {
+        clearTouchSelection();
+        resultBox.classList.add("show");
+        resultBox.innerHTML = "Đã bỏ chọn thẻ. Chạm vào một thẻ khác nếu muốn đổi vị trí.";
+        return;
+      }
+
+      cardsList.insertBefore(touchSelectedCard, cardEl);
+      syncCurrentCardsFromDOM();
+      clearTouchSelection();
+      renderCards();
+      resultBox.classList.add("show");
+      resultBox.innerHTML = "Đã chuyển thẻ. Có thể tiếp tục chạm để sắp xếp, hoặc bấm kiểm tra đáp án.";
+    }
 
     function shuffle(array) {
       const copy = [...array];
@@ -454,6 +506,8 @@
 
       cardElements.forEach(card => {
         card.addEventListener("dragstart", () => {
+          isHtmlDragging = true;
+          clearTouchSelection();
           card.classList.add("dragging");
         });
 
@@ -461,6 +515,14 @@
           card.classList.remove("dragging");
           syncCurrentCardsFromDOM();
           renderCards();
+          setTimeout(() => {
+            isHtmlDragging = false;
+          }, 120);
+        });
+
+        card.addEventListener("click", event => {
+          event.preventDefault();
+          handleTouchSort(card);
         });
       });
     }
@@ -560,6 +622,7 @@
     });
 
     document.getElementById("shuffleBtn").addEventListener("click", () => {
+      clearTouchSelection();
       currentCards = shuffle(cards);
       resultBox.classList.remove("show");
       renderCards();
@@ -570,6 +633,7 @@
     });
 
     modeSelect.addEventListener("change", () => {
+      clearTouchSelection();
       instruction.innerHTML = instructions[modeSelect.value];
       resultBox.classList.remove("show");
       updateScore(false);
