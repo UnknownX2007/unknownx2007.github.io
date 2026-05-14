@@ -178,6 +178,25 @@
       transform: scale(.98) rotate(-1deg);
     }
 
+
+    .quote-card.selected {
+      outline: 4px solid #ffd27a;
+      box-shadow: 0 0 0 6px rgba(255, 210, 122, .24), 0 12px 24px rgba(0,0,0,.34);
+      transform: translateY(-2px);
+    }
+
+    .quote-card,
+    .zone,
+    .card-bank,
+    button {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .quote-card {
+      -webkit-user-drag: none;
+      touch-action: manipulation;
+    }
+
     .drop-area {
       padding: 18px;
     }
@@ -381,7 +400,7 @@
     <header>
       <h1>Ai đang nhìn? Ai đang nghĩ?</h1>
       <p class="subtitle">
-        Kéo từng câu văn vào đúng khu vực phát ngôn hoặc góc nhìn. Trò chơi giúp học sinh giải mã nghệ thuật trần thuật đa thanh ở đoạn mở đầu.
+        Kéo từng câu văn vào đúng khu vực phát ngôn hoặc góc nhìn. Trò chơi giúp học sinh nhận ra lời người kể chuyện, cái nhìn của dân làng Vũ Đại và trạng thái say xỉn của Chí Phèo.
       </p>
       <div class="scorebar">
         <span class="pill">Điểm: <span id="score">0</span>/<span id="total">0</span></span>
@@ -404,22 +423,25 @@
             <div class="zone-header">
               <div class="icon" style="margin-bottom: 50px"><img src="narrator.png" alt="narrator" style="width:100%;height:100%;object-fit:cover;border-radius:20px;"/></div>
               <h2>Người kể chuyện</h2>
+              <p>Góc nhìn bên ngoài: quan sát, kể, miêu tả sự việc.</p>
             </div>
             <div class="zone-cards"></div>
           </div>
 
           <div class="zone" data-zone="villagers">
             <div class="zone-header">
-              <div class="icon" style="margin-bottom: 50px"><img src="the3.png" alt="villagers" style="width:100%;height:100%;object-fit:cover;border-radius:20px;"/></div>
+              <div class="icon" style="margin-bottom: 50px"><img src="villagers.png" alt="villagers" style="width:100%;height:100%;object-fit:cover;border-radius:20px;"/></div>
               <h2>Dân làng Vũ Đại</h2>
+              <p>Góc nhìn đám đông bàng quan, sợ hãi, dò xét, xa lánh.</p>
             </div>
             <div class="zone-cards"></div>
           </div>
 
           <div class="zone" data-zone="chipheo">
             <div class="zone-header">
-              <div class="icon" style="margin-bottom: 50px"><img src="the1.png" alt="chipheo" style="width:100%;height:100%;object-fit:cover;border-radius:20px;"/></div>
+              <div class="icon" style="margin-bottom: 50px"><img src="chipheo.png" alt="chipheo" style="width:100%;height:100%;object-fit:cover;border-radius:20px;"/></div>
               <h2>Chí Phèo</h2>
+              <p>Góc nhìn kẻ say: tiếng chửi, cảm giác bị bỏ rơi, cô độc.</p>
             </div>
             <div class="zone-cards"></div>
           </div>
@@ -461,18 +483,33 @@
       },
       {
         id: "c6",
+        text: "Tức mình, hắn chửi ngay tất cả làng Vũ Đại.",
+        answer: "narrator"
+      },
+      {
+        id: "c7",
         text: "Thế cũng chẳng sao: đời là tất cả nhưng chẳng là ai.",
         answer: "villagers"
       },
       {
-        id: "c7",
+        id: "c8",
         text: "Thế thì nó có khổ hắn không?",
         answer: "chipheo"
       },
       {
-        id: "c8",
+        id: "c9",
         text: "Không biết đứa chết mẹ nào lại đẻ ra thân hắn cho hắn khổ đến nông nỗi này? A ha!",
         answer: "chipheo"
+      },
+      {
+	id: "c11",
+	text: "Hắn nghiến răng vào mà chửi cái đứa đã đẻ ra Chí Phèo.",
+	answer: "narrator"
+      },
+      {
+	id: "c12",
+	text: "Nhưng mà biết đứa nào đã đẻ ra Chí Phèo? Có mà trời biết!",
+	answer: "chipheo"
       }
     ];
 
@@ -485,8 +522,37 @@
     const celebration = document.getElementById("celebration");
     const closeCelebrateBtn = document.getElementById("closeCelebrateBtn");
     const zones = document.querySelectorAll(".zone");
+    let touchSelectedCard = null;
+    let isHtmlDragging = false;
 
     totalEl.textContent = cardsData.length;
+
+    function clearTouchSelection() {
+      document.querySelectorAll(".quote-card.selected").forEach(card => card.classList.remove("selected"));
+      touchSelectedCard = null;
+    }
+
+    function selectTouchCard(card) {
+      if (isHtmlDragging) return;
+
+      if (touchSelectedCard === card) {
+        clearTouchSelection();
+        feedback.textContent = "Đã bỏ chọn thẻ. Trên iOS, em có thể chạm thẻ rồi chạm khu vực cần thả.";
+        return;
+      }
+
+      clearTouchSelection();
+      touchSelectedCard = card;
+      card.classList.add("selected");
+      feedback.textContent = "📱 Thẻ đã được chọn. Hãy chạm vào một khu vực: Người kể chuyện, Dân làng Vũ Đại hoặc Chí Phèo.";
+    }
+
+    function moveSelectedTo(container, message) {
+      if (!touchSelectedCard) return;
+      container.appendChild(touchSelectedCard);
+      clearTouchSelection();
+      feedback.textContent = message || "Đã chuyển thẻ. Tiếp tục phân loại hoặc bấm kiểm tra đáp án.";
+    }
 
     function shuffle(array) {
       return [...array].sort(() => Math.random() - 0.5);
@@ -501,17 +567,29 @@
       div.textContent = card.text;
 
       div.addEventListener("dragstart", () => {
+        isHtmlDragging = true;
+        clearTouchSelection();
         div.classList.add("dragging");
       });
 
       div.addEventListener("dragend", () => {
         div.classList.remove("dragging");
+        setTimeout(() => {
+          isHtmlDragging = false;
+        }, 120);
+      });
+
+      div.addEventListener("click", event => {
+        event.stopPropagation();
+        event.preventDefault();
+        selectTouchCard(div);
       });
 
       return div;
     }
 
     function renderCards() {
+      clearTouchSelection();
       cardBank.innerHTML = "";
       document.querySelectorAll(".zone-cards").forEach(zone => zone.innerHTML = "");
 
@@ -533,6 +611,11 @@
 
     setupDrop(cardBank);
 
+    cardBank.addEventListener("click", event => {
+      if (event.target.closest(".quote-card")) return;
+      moveSelectedTo(cardBank, "Đã đưa thẻ về kho. Em có thể chọn lại và thả vào khu vực khác.");
+    });
+
     zones.forEach(zone => {
       const zoneCards = zone.querySelector(".zone-cards");
       setupDrop(zoneCards);
@@ -548,6 +631,11 @@
 
       zone.addEventListener("drop", () => {
         zone.classList.remove("over");
+        clearTouchSelection();
+      });
+
+      zone.addEventListener("click", () => {
+        moveSelectedTo(zoneCards, "Đã thả thẻ vào khu vực. Có thể tiếp tục chạm để phân loại thẻ khác.");
       });
     });
 
