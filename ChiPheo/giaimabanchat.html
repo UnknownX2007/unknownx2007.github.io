@@ -187,6 +187,24 @@
       transform: rotate(-2deg) scale(0.98);
     }
 
+
+    .event-card.selected {
+      outline: 4px solid var(--gold);
+      box-shadow: 0 0 0 6px rgba(211, 168, 77, 0.24), 0 14px 30px rgba(0, 0, 0, 0.28);
+      transform: translateY(-2px);
+    }
+
+    .event-card,
+    .drop-zone,
+    button {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .event-card {
+      -webkit-user-drag: none;
+      touch-action: manipulation;
+    }
+
     .event-card .tag {
       display: inline-flex;
       align-items: center;
@@ -545,9 +563,58 @@
 
     let draggedCard = null;
     let completed = false;
+    let touchSelectedCard = null;
+    let isHtmlDragging = false;
+
+    function clearTouchSelection() {
+      document.querySelectorAll(".event-card.selected").forEach(card => card.classList.remove("selected"));
+      touchSelectedCard = null;
+    }
+
+    function selectTouchCard(card) {
+      if (completed || isHtmlDragging) return;
+
+      if (touchSelectedCard === card) {
+        clearTouchSelection();
+        messageEl.textContent = "Đã bỏ chọn thẻ. Trên iOS, em có thể chạm thẻ rồi chạm ô cần thả.";
+        return;
+      }
+
+      clearTouchSelection();
+      touchSelectedCard = card;
+      card.classList.add("selected");
+      messageEl.textContent = "📱 Thẻ đã được chọn. Hãy chạm vào ô bản chất phù hợp để thả thẻ.";
+    }
+
+    function placeSelectedCardInZone(zone) {
+      if (!touchSelectedCard || completed) return;
+
+      const slot = zone.querySelector(".slot");
+      const existingCard = slot.querySelector(".event-card");
+
+      if (existingCard && existingCard !== touchSelectedCard) {
+        cardsContainer.appendChild(existingCard);
+      }
+
+      slot.innerHTML = "";
+      slot.appendChild(touchSelectedCard);
+      clearTouchSelection();
+      clearFeedback();
+      updateScore(false);
+    }
+
+    function moveSelectedBackToBank() {
+      if (!touchSelectedCard || completed) return;
+      cardsContainer.appendChild(touchSelectedCard);
+      clearTouchSelection();
+      clearFeedback();
+      updateScore(false);
+    }
 
     function bindCardEvents(card) {
       card.addEventListener("dragstart", () => {
+        isHtmlDragging = true;
+        clearTouchSelection();
         draggedCard = card;
         card.classList.add("dragging");
       });
@@ -555,6 +622,15 @@
       card.addEventListener("dragend", () => {
         card.classList.remove("dragging");
         draggedCard = null;
+        setTimeout(() => {
+          isHtmlDragging = false;
+        }, 120);
+      });
+
+      card.addEventListener("click", event => {
+        event.stopPropagation();
+        event.preventDefault();
+        selectTouchCard(card);
       });
     }
 
@@ -585,8 +661,13 @@
 
         slot.innerHTML = "";
         slot.appendChild(draggedCard);
+        clearTouchSelection();
         clearFeedback();
         updateScore(false);
+      });
+
+      zone.addEventListener("click", () => {
+        placeSelectedCardInZone(zone);
       });
     });
 
@@ -598,8 +679,14 @@
       event.preventDefault();
       if (!draggedCard || completed) return;
       cardsContainer.appendChild(draggedCard);
+      clearTouchSelection();
       clearFeedback();
       updateScore(false);
+    });
+
+    cardsContainer.addEventListener("click", event => {
+      if (event.target.closest(".event-card")) return;
+      moveSelectedBackToBank();
     });
 
     function clearFeedback() {
@@ -664,6 +751,7 @@
     });
 
     resetBtn.addEventListener("click", () => {
+      clearTouchSelection();
       completed = false;
       dropZones.forEach(zone => {
         const slot = zone.querySelector(".slot");
